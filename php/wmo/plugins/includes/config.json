@@ -1,0 +1,11 @@
+
+{
+    "menu": {
+        "url": "?wmo=includes",
+        "bi-icon": "bi-layout-sidebar-inset",
+        "bi-text": "",
+        "link-text": "Includes",
+        "show":"yes"
+    },
+    "page": "includes"
+}

@@ -1,0 +1,8 @@
+{
+    "plugin": {
+        "name": "bootstrap",
+        "filename":"cdnjs.php",
+        "run":"init",
+        "requires":"html_structure"
+    }
+}

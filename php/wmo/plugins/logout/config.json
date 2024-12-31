@@ -1,0 +1,11 @@
+
+{
+    "menu": {
+        "url": "?wmo=logout",
+        "bi-icon": "bi bi-power text-danger",
+        "bi-text": "",
+        "link-text": "Sign Out",
+        "show":"yes"
+    },
+    "page": "manager"
+}

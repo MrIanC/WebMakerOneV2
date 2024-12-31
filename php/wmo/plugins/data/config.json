@@ -1,0 +1,11 @@
+
+{
+    "menu": {
+        "url": "?wmo=data",
+        "bi-icon": "bi-bar-chart-steps",
+        "bi-text": "",
+        "link-text": "Data",
+        "show":"yes"
+    },
+    "page": "data"
+}

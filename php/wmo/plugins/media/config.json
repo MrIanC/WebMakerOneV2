@@ -1,0 +1,10 @@
+{
+    "menu": {
+        "url": "?wmo=media",
+        "bi-icon": "bi-image",
+        "bi-text": "",
+        "link-text": "Media",
+        "show":"yes"
+    },
+    "page": "manager"
+}

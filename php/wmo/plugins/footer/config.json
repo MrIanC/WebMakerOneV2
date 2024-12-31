@@ -1,0 +1,11 @@
+
+{
+    "menu": {
+        "url": "?wmo=footer",
+        "bi-icon": "bi-card-text",
+        "bi-text": "",
+        "link-text": "Footer",
+        "show":"yes"
+    },
+    "page": "footer"
+}

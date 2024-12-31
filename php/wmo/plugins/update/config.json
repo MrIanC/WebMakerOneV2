@@ -1,0 +1,11 @@
+
+{
+    "menu": {
+        "url": "?wmo=update",
+        "bi-icon": "bi-github",
+        "bi-text": "",
+        "link-text": "Update",
+        "show":"yes"
+    },
+    "page": "update"
+}

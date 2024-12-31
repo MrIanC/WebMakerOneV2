@@ -1,0 +1,22 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "```json-ld\n{\n  \"@context\": {\n    \"schema\": \"http://schema.org/\"\n  },\n  \"@type\": \"WebPage\",\n  \"headline\": \"Effective Website Designs\",\n  \"description\": \"Web Maker One is your partner in building a website that reflects the quality of your brand. We combine elegant design, meticulous planning, and rigorous testing to deliver a website that inspires trust and showcases your dedication.\",\n  \"image\": [\n    \"/uploads/IMG20240315175141.jpg\",\n    \"/uploads/IMG20240315175118.jpg\"\n  ],\n  \"hasPart\": [\n    {\n      \"@type\": \"WebPageElement\",\n      \"headline\": \"Personalised Consultations\",\n      \"description\": \"From the start we communicate with you to get your expectations. We will find the best solution for your needs in the moment and in the future.\"\n    },\n    {\n      \"@type\": \"WebPageElement\",\n      \"headline\": \"Tailored Designs\",\n      \"description\": \"You can have faith that your website is professionally designed from scratch to match your brand, without modified stock templates.\"\n    },\n    {\n      \"@type\": \"WebPageElement\",\n      \"headline\": \"Support\",\n      \"description\": \"Have peace of mind if something goes wrong with our online and telephonic support available for content issues, host issues, email issues and more.\"\n    },\n    {\n      \"@type\": \"WebPageElement\",\n      \"headline\": \"Domain and Website Hosting\",\n      \"description\": \"Web Maker Once uses the domain registrar and hosting provider you want to use. We have worked with many different providers and have an extensive knowledge of the most hosting client panels. We will always suggest the that makes the most sense to use based on your current website requirements, your budget and the scalability that you require.\"\n    },\n    {\n      \"@type\": \"WebPageElement\",\n      \"headline\": \"Content, media and graphic design\",\n      \"description\": \"Web Maker One can use stock images, your content, AI generated imagery or have artwork commissioned as you need. Only licensed imagery will be used. Likewise the word content of your site will be your words, generated text or cited for if not the original.\"\n    },\n    {\n      \"@type\": \"WebPageElement\",\n      \"headline\": \"Website Design Tailored to Your Needs\",\n      \"description\": \"Web Maker One strives to deliver your website the way you want it. We design your website along side you or match it to your brand or style. Your website is a window into your brand.\"\n    }\n  ],\n  \"mainEntityOfPage\": {\n    \"@type\": \"WebPage\",\n    \"@id\": \"CURRENT_PAGE_URL\" \n  }\n}\n```\n"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "avgLogprobs": -0.016550172078742556
+    }
+  ],
+  "usageMetadata": {
+    "promptTokenCount": 4259,
+    "candidatesTokenCount": 627,
+    "totalTokenCount": 4886
+  },
+  "modelVersion": "gemini-1.5-flash-latest"
+}

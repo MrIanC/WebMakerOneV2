@@ -1,0 +1,8 @@
+{
+    "plugin": {
+        "name": "webapp",
+        "filename":"webapp.php",
+        "run":"init",
+        "requires":""
+    }
+}

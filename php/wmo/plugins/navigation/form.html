@@ -1,0 +1,40 @@
+<div class="container">
+    <h1 class="mt-3">Site Navigation</h1>
+    <div class="mb-3 text-end border-bottom small text-secondary">Edit, delete and create Navigation</div>
+    <div class="row">
+        <div class="col-12 col-md-4">
+            <h2 class="fs-5">Available Pages</h2>
+            <form method="post">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput1"
+                        name="navigation_text" required="true" />
+                    <label for="floatingInput1">Navigation Text</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput2" 
+                        name="navigation_url" required="true" list="page_list" />
+                    <label for="floatingInput2">Url</label>
+                </div>
+                <datalist id="page_list">
+                    <option value="none"></option>
+                    #datalist-options#
+                </datalist>
+                <button class="btn btn-primary">Add to Navigation</button>
+            </form>
+        </div>
+
+        <div class="col-12 col-md-8">
+            <h2 class="fs-5">Current Navigation Menu</h2>
+            <form method="post">
+                #navigation-used#
+            </form>
+        </div>
+    </div>
+    <div class="alert alert-primary text-center mt-5" role="alert">
+        #navigation-exists#
+    </div>
+
+    <div class="py-3 text-end">
+        <a href="/app/php/wmo/plugins/editor/editor.php?page=header/header.html">Edit Navigation File</a>
+    </div>
+</div>

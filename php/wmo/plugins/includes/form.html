@@ -1,0 +1,49 @@
+<div class="container">
+    <h1 class="mt-3">Includes</h1>
+    <div class="mb-3 text-end border-bottom small text-secondary">Include Scripts, Stylesheets or HTML</div>
+    <div class="row">
+        <div class="col-12 col-md-4">
+            <h2 class="fs-5">Options</h2>
+            <form method="post">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput0" 
+                        name="includes_name" required="true" />
+                    <label for="floatingInput0">Name</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <select type="text" class="form-control" id="floatingInput1" 
+                        name="includes_type" required="true">
+                        <option>Script</option>    
+                        <option>Stylesheet</option>
+                        <option>HTML</option>
+                    </select>
+                    <label for="floatingInput1">Type</label>
+                </div>
+                
+                <div class="form-floating mb-3">
+                    <textarea type="text" class="form-control" id="floatingInput2" 
+                        name="includes_url" required="true"></textarea>
+                    <label for="floatingInput2">Url/HTML</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <select type="text" class="form-control" id="floatingInput3" 
+                        name="includes_location" required="true" list="page_list">
+                        <option>Head - Start</option>    
+                        <option>Head - End</option>    
+                        <option>Body - Start</option>    
+                        <option>Body - End</option>
+                    </select>
+                    <label for="floatingInput3">Location</label>
+                </div>
+                <button class="btn btn-primary">Include Link/Script</button>
+            </form>
+        </div>
+
+        <div class="col-12 col-md-8">
+            <h2 class="fs-5">Current Includes Order</h2>
+            <form method="post">
+                #includes-used#
+            </form>
+        </div>
+    </div>
+</div>

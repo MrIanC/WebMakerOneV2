@@ -1,0 +1,11 @@
+
+{
+    "menu": {
+        "url": "?wmo=publish",
+        "bi-icon": "bi-cloud-arrow-up",
+        "bi-text": "",
+        "link-text": "Publish",
+        "show":"yes"
+    },
+    "page": "publish"
+}

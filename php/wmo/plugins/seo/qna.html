@@ -1,0 +1,92 @@
+<!-- Page Title -->
+
+<div class="row">
+    <div class="col">
+        <div class="border-bottom mb-4 p-3">
+            <label for="title">Page Title (Max 60 characters):</label>
+            <input class="form-control" type="text" id="title" name="title" value="#qna_title#" maxlength="60" />
+            <div class="small text-secondary text-end">
+                <div class="fw-bold small">Heading 1</div>
+                <div>#qna_heading1#</div>
+            </div>
+        </div>
+        <!-- Meta Description -->
+        <div class="border-bottom mb-4 p-3">
+            <label for="metaDescription">Meta Description (Max 160 characters):</label>
+            <textarea class="form-control" id="metaDescription" name="metaDescription" maxlength="160"
+                rows="3">#qna_metaDescription#</textarea>
+            <div class="small text-secondary text-end">
+                <div class="fw-bold small">All Headings</div>
+                <div>#qna_headings#</div>
+            </div>
+        </div>
+
+        <!-- Priority -->
+        <div class="border-bottom mb-4 p-3">
+            <label for="customRange1" class="form-label">Priority</label>
+            <input type="range" class="form-range" id="customRange1" name="priority" value="#qna_priority#" min="0.1" max="1" step="0.1" />
+            <div class="small text-secondary text-end">
+                <div class="fw-bold small">All Headings</div>
+                <div>#qna_headings#</div>
+            </div>
+        </div>
+
+        <!-- Favicon -->
+        <div class="border-bottom mb-4 p-3">
+            <label for="faviconUrl">Favicon URL:</label>
+            <input class="form-control" type="text" id="faviconUrl" name="faviconUrl" value="#qna_faviconUrl#" />
+            <div class="small text-secondary text-end">
+                <div class="fw-bold small">Recomended</div>
+                <div>Put a favicon.ico in media and set it to the Favicon</div>
+            </div>
+        </div>
+
+        <!-- Canonical URL -->
+        <div class="border-bottom mb-4 p-3">
+            <label for="canonicalUrl">Canonical URL:</label>
+            <input class="form-control" type="text" id="canonicalUrl" name="canonicalUrl" value="#qna_canonicalUrl#" />
+            <div class="small text-secondary text-end">
+                <div class="fw-bold small">Page Url</div>
+                <div>#qna_RealUrl#</div>
+            </div>
+        </div>
+        <!-- Robots Meta -->
+        <div class="border-bottom mb-4 p-3">
+            <label for="robotsMeta">Meta Robots:</label>
+            <select class="form-select" id="robotsMeta" name="robotsMeta" value="#qna_robotsMeta#">
+                <option value="index, follow">Index, Follow</option>
+                <option value="noindex, follow">No Index, Follow</option>
+                <option value="index, nofollow">Index, No Follow</option>
+                <option value="noindex, nofollow">No Index, No Follow</option>
+            </select>
+            <div class="small text-secondary text-end">
+                <div class="fw-bold small">Default</div>
+                <div>Index, Follow</div>
+            </div>
+
+        </div>
+        <!-- Open Graph Tags -->
+        <fieldset class="p">
+            <legend>Open Graph Tags (Social Media Preview)</legend>
+
+            <label for="ogTitle">OG Title:</label>
+            <input class="form-control" type="text" id="ogTitle" name="ogTitle" value="#qna_ogTitle#" />
+
+            <label for="ogDescription">OG Description:</label>
+            <textarea class="form-control" id="ogDescription" name="ogDescription"
+                rows="3">#qna_ogDescription#</textarea>
+
+            <label for="ogImage">OG Image URL:</label>
+            <input class="form-control" type="text" id="ogImage" name="ogImage" value="#qna_ogImage#" />
+        </fieldset>
+
+
+        <!-- Schema Markup -->
+        <label for="schemaMarkup">Structured Data (JSON-LD):</label>
+        <textarea class="form-control" id="schemaMarkup" name="schemaMarkup" rows="5"
+            placeholder='{"@context": "https://schema.org", "@type": "WebPage", "name": "Page Name", "url": "https://example.com"}'>#qna_schemaMarkup#</textarea>
+
+        <!-- Submit Button -->
+        <button class="btn btn-primary btn-sm" type="submit">Submit SEO Info</button>
+    </div>
+</div>

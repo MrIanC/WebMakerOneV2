@@ -1,0 +1,51 @@
+:root {
+    --gen-pink: #e1b2b2;
+    --gen-pink-rgb: 225, 178, 178;
+}
+
+.text-custom-pink {
+    --bs-text-opacity: 1;
+    color: rgba(225, 178, 178, var(--bs-text-opacity)) !important;
+}
+
+.bg-custom-pink {
+    --bs-text-opacity: 1;
+    background-color: rgba(225, 178, 178, var(--bs-bg-opacity)) !important;
+}
+
+.btn-custom-pink {
+    --bs-btn-color: #000000;
+    --bs-btn-bg: #e1b2b2;
+    --bs-btn-border-color: #e1b2b2;
+    --bs-btn-hover-color: #000000;
+    --bs-btn-hover-bg: #b48e8e;
+    --bs-btn-hover-border-color: #b48e8e;
+    --bs-btn-focus-shadow-rgb: 49, 132, 253;
+    --bs-btn-active-color: #000000;
+    --bs-btn-active-bg: #b48e8e;
+    --bs-btn-active-border-color: #b48e8e;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #aaa;
+    --bs-btn-disabled-bg: #ffffff;
+    --bs-btn-disabled-border-color: #ffffff;
+}
+
+.bg-opacity-10 {
+    --bs-bg-opacity: 0.1;
+}
+
+.bg-opacity-25 {
+    --bs-bg-opacity: 0.25;
+}
+
+.bg-opacity-50 {
+    --bs-bg-opacity: 0.5;
+}
+
+.bg-opacity-75 {
+    --bs-bg-opacity: 0.75;
+}
+
+.bg-opacity-100 {
+    --bs-bg-opacity: 1;
+}

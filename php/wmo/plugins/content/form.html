@@ -1,0 +1,35 @@
+<div class="container">
+    <h1 class="mt-3">Content Pages</h1>
+    <div class="mb-3 text-end border-bottom small text-secondary">Edit, delete and create content pages</div>
+    <div class="alert alert-primary text-center" role="alert">
+        #landing-exists#
+    </div>
+    <div class="row">
+        <div class="col-12 col-lg-6">
+            <h2 class="fs-5">Create New Page</h2>
+            <form method="post">
+                <input type="text" class="form-control form-control-sm mb-3" name="new_page_name" required="true" />
+                <div class="text-end">
+                    <button class="btn-sm btn btn-primary">Create New Page</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-12 col-lg-6">
+            <h2 class="fs-5">Current Pages</h2>
+            <form method="post" spellcheck="false">
+                #page-list#
+            </form>
+        </div>
+        <div class="col-12 col-lg-6">
+            <h2 class="fs-5">Deleted Pages</h2>
+            <form method="post" spellcheck="false">
+                #restore-list#
+            </form>
+        </div>
+
+        
+
+    </div>
+
+
+</div>

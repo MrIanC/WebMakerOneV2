@@ -1,0 +1,51 @@
+<div class="vh-100">
+    <h1 class="mt-3">Build Website</h1>
+    <div class="mb-3 text-end border-bottom small text-secondary">Choose your build deployment</div>
+
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-6">
+            <div class="p-2 border rounded shadow m-3">
+                <h2 class="fs-5">Under Construction</h2>
+                <p class="small border-bottom text-end text-secondary">
+                    This build sets all pages to under construction
+                </p>
+                <form method="post">
+                    <input type="hidden" name="deployment" value="construction" />
+
+                    <div class="text-end">
+                        <button class="btn btn-primary btn-sm" name="uctemplate" value="uc_default"><i class="bi bi-play-fill"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-12 col-sm-12 col-md-6">
+            <div class="p-2 border rounded shadow m-3">
+                <h2 class="fs-5">Public</h2>
+                <p class="small border-bottom text-end text-secondary">
+                    This build allows access to any one on the internet
+                </p>
+                <form method="post">
+                    <input type="hidden" name="deployment" value="public" />
+                    <div class="text-end">
+                        <button class="btn btn-primary btn-sm"><i class="bi bi-play-fill"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-12 col-sm-12 col-md-6">
+            <div class="p-2 border rounded shadow m-3">
+                <h2 class="fs-5">Export</h2>
+                <p class="small border-bottom text-end text-secondary">
+                    Export the website to a zip file
+                </p>
+                <form method="post">
+                    <input type="hidden" name="deployment" value="zip_save" />
+                    <div class="text-end">
+                        <button class="btn btn-primary btn-sm"><i class="bi bi-play-fill"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>

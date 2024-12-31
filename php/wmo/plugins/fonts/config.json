@@ -1,0 +1,11 @@
+
+{
+    "menu": {
+        "url": "?wmo=fonts",
+        "bi-icon": "bi-fonts",
+        "bi-text": "",
+        "link-text": "Fonts",
+        "show":"yes"
+    },
+    "page": "fonts"
+}

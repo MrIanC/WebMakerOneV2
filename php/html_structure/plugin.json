@@ -1,0 +1,6 @@
+{
+    "plugin": {
+        "name": "html_structure",
+        "filename":"main.php"
+    }
+}

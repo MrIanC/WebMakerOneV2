@@ -1,0 +1,8 @@
+{
+    "plugin": {
+        "name": "jquery3.7.1",
+        "filename":"cdnjs.php",
+        "run":"init",
+        "requires":"html_structure"
+    }
+}

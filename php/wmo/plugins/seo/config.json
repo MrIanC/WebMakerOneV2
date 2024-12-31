@@ -1,0 +1,11 @@
+
+{
+    "menu": {
+        "url": "?wmo=seo",
+        "bi-icon": "bi-search-heart",
+        "bi-text": "",
+        "link-text": "SEO",
+        "show":"yes"
+    },
+    "page": "seo"
+}

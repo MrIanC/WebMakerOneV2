@@ -1,0 +1,11 @@
+
+{
+    "menu": {
+        "url": "?wmo=build",
+        "bi-icon": "",
+        "bi-text": "",
+        "link-text": "",
+        "show":"no"
+    },
+    "include": "functions"
+}

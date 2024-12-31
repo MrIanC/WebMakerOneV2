@@ -1,0 +1,52 @@
+<div>
+    <div class="bg-image">
+        <div class="d-flex justify-content-center align-items-center vh-100 bg-dark bg-opacity-75">
+            <div class="card col-md-4 shadow">
+                <div class="card-header">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <span class="py-2">
+                                <i class="bi bi-person-fill"></i>
+                            </span>
+                            <span class="px-2">
+                                Sign in
+                            </span>
+                        </div>
+                        <div class="fw-bold">Techbit</div>
+                    </div>
+                </div>
+                <form method="POST" class="card-text">
+                    <input type="hidden" name="login" value="yes"/>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" name="username" class="form-control" id="username"
+                                placeholder="Enter your username" required="" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" name="password" class="form-control" id="password"
+                                placeholder="Enter your password" required="" />
+                        </div>
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-primary">
+                                Login
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <div class="card-footer text-muted py-1 small text-start">
+                    <a href="#">Forgot Password</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <style>
+        .bg-image {
+            background-image: url("https://cdn.pixabay.com/photo/2013/08/09/05/54/layer-170971_1280.jpg");
+            background-size: cover;
+            background-position: center center;
+        }
+    </style>
+</div>

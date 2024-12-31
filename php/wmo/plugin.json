@@ -1,0 +1,8 @@
+{
+    "plugin": {
+        "name": "wmo",
+        "filename":"main.php",
+        "run":"init",
+        "requires":""
+    }
+}

@@ -1,0 +1,11 @@
+
+{
+    "menu": {
+        "url": "?wmo=scripts",
+        "bi-icon": "bi-filetype-js",
+        "bi-text": "",
+        "link-text": "Scripts",
+        "show":"yes"
+    },
+    "page": "scripts"
+}

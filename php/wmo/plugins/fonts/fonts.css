@@ -1,0 +1,31 @@
+
+
+@font-face {
+    font-family: 'headingFonts';
+    src: url('#heading-font#') format('truetype');
+}       
+@font-face {
+    font-family: 'paragraphFonts';
+    src: url('#paragraph-font#') format('truetype');
+}
+@font-face {
+    font-family: 'navigationFonts';
+    src: url('#navigation-font#') format('truetype');
+}
+
+* {
+        font-family: "paragraphFonts", serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "headingFonts", sans-serif !important;
+}
+
+nav * {
+    font-family: "navigationFonts", sans-serif  !important;;
+}   

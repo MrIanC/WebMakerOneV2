@@ -1,0 +1,8 @@
+{
+    "plugin": {
+        "name": "auth",
+        "filename":"authenticate.php",
+        "run":"init",
+        "requires":""
+    }
+}

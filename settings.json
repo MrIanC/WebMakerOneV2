@@ -1,0 +1,16 @@
+{
+    "NB": "Remember the order Matters with the use_plugins array",
+    "use_plugins": [
+        "html_structure",
+        "database",
+        "auth",
+        "scale",
+        "jquery3.7.1",
+        "global_functions",
+        "example",
+        "pagecontrol",
+        "bootstrap",
+        "webapp",
+        "wmo"
+    ]
+}

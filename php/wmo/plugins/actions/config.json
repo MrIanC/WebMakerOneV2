@@ -1,0 +1,11 @@
+
+{
+    "menu": {
+        "url": "?wmo=actions",
+        "bi-icon": "bi-hand-index-thumb",
+        "bi-text": "",
+        "link-text": "Actions",
+        "show":"yes"
+    },
+    "page": "actions"
+}

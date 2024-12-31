@@ -1,0 +1,11 @@
+
+{
+    "menu": {
+        "url": "?wmo=navigation",
+        "bi-icon": "bi-sign-turn-slight-right",
+        "bi-text": "",
+        "link-text": "Navigation",
+        "show":"yes"
+    },
+    "page": "navigation"
+}

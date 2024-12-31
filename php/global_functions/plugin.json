@@ -1,0 +1,6 @@
+{
+    "plugin": {
+        "name": "global_functions",
+        "filename":"functions.php"
+    }
+}

@@ -1,0 +1,8 @@
+{
+    "plugin": {
+        "name": "scale",
+        "filename":"scale.php",
+        "run":"init",
+        "requires":"html_structure"
+    }
+}

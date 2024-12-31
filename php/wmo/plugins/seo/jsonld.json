@@ -1,0 +1,46 @@
+{
+    "@context": {
+        "schema": "http://schema.org/",
+        "dc": "http://purl.org/dc/terms/"
+    },
+    "@type": "WebPage",
+    "headline": "Techbit Website Solutions",
+    "description": "Website Solutions, Services, Hosting, and Design",
+    "keywords": "Website, Solutions, Services, Hosting, Design",
+    "image": [
+        {
+            "@type": "ImageObject",
+            "url": "/uploads/IMG20240315175118.jpg",
+            "altText": "Highway with a mountan in the clouds"
+        },
+        {
+            "@type": "ImageObject",
+            "url": "/uploads/IMG20240315175137.jpg",
+            "altText": "Highway with a mountan in the clouds"
+        },
+        {
+            "@type": "ImageObject",
+            "url": "/uploads/IMG20240315175141.jpg",
+            "altText": "Highway with a mountan in the clouds"
+        },
+        {
+            "@type": "ImageObject",
+            "url": "/uploads/IMG_20241119_065052.jpg",
+            "altText": "Snake"
+        }
+    ],
+    "hasPart": [
+        {
+            "@type": "WebPageElement",
+            "headline": "Website Services"
+        },
+        {
+            "@type": "WebPageElement",
+            "headline": "Website Hosting"
+        },
+        {
+            "@type": "WebPageElement",
+            "headline": "Website Design"
+        }
+    ]
+}

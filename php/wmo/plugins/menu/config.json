@@ -1,0 +1,10 @@
+{
+    "menu": {
+        "url": "?wmo=menu",
+        "bi-icon": "bi-menu",
+        "bi-text": "",
+        "link-text": "Menu",
+        "show":"no"
+    },
+    "include":"build_menu"
+}

@@ -1,0 +1,8 @@
+{
+    "plugin": {
+        "name": "database",
+        "filename":"database.php",
+        "run":"init",
+        "requires":"html_structure"
+    }
+}

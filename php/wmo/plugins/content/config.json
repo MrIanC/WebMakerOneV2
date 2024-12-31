@@ -1,0 +1,11 @@
+
+{
+    "menu": {
+        "url": "?wmo=content",
+        "bi-icon": "bi-body-text",
+        "bi-text": "",
+        "link-text": "Content",
+        "show":"yes"
+    },
+    "page": "pages"
+}

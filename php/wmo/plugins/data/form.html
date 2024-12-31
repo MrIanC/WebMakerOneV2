@@ -1,0 +1,203 @@
+<div class="container">
+    <h1 class="mt-3">Site Data</h1>
+    <div class="mb-3 text-end border-bottom small text-secondary">Manage your site details, contact details, opening
+        hours and more.</div>
+<!--
+    <form method="post">
+        <div class="border rounded shadow p-3 mb-4">
+            <div class="row">
+                <div class="col-12 col-md-4 col-lg-3">
+                    <p class="fw-bold">Site Details</p>
+                </div>
+                <div class="col">
+
+                    <div class="mb-3">
+                        <label for="' . $key . '">Site Name/Title</label>
+                        <textarea type="text" class="form-control" name="name" rows="1">#site_name#</textarea>
+                        <div class="small text-end text-secondary">Give your site a name or title</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="' . $key . '">Site Url</label>
+                        <textarea type="text" class="form-control" name="url" rows="1">#site_url#</textarea>
+                        <div class="small text-end text-secondary">The url where your site will be deployed</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="' . $key . '">Site Description</label>
+                        <textarea type="text" class="form-control" name="description"
+                            rows="1">#site_description#</textarea>
+                        <div class="small text-end text-secondary">A description of what this site is for or a
+                            description of the company</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="border rounded shadow p-3 mb-4">
+            <div class="row">
+                <div class="col-12 col-md-4 col-lg-3">
+                    <p class="fw-bold">Site Media</p>
+                </div>
+                <div class="col">
+                    <div class="mb-3">
+                        <label for="' . $key . '">Site Logo</label>
+                        <textarea type="text" class="form-control" name="favicon" rows="1">#site_logo#</textarea>
+                        <div class="small text-end text-secondary">Select your sites Logo</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="' . $key . '">Site Image</label>
+                        <textarea type="text" class="form-control" name="url" rows="1">#site_image#</textarea>
+                        <div class="small text-end text-secondary">An image that will represent your site on social
+                            media sharing</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="border rounded shadow p-3 mb-4">
+            <div class="row">
+                <div class="col-12 col-md-4 col-lg-3">
+                    <p class="fw-bold">Contact Details</p>
+                </div>
+                <div class="col">
+                    <div class="row">
+                        <div class="mb-3 col-12 col-md-6">
+                            <label for="' . $key . '">Telephone Number</label>
+                            <textarea type="text" class="form-control" name="telephone"
+                                rows="1">#site_telephone#</textarea>
+                            <div class="small text-end text-secondary">Telephone Number</div>
+                        </div>
+                        <div class="mb-3 col-12 col-md-6">
+                            <label for="' . $key . '">Email Address</label>
+                            <textarea type="text" class="form-control" name="email" rows="1">#site_email#</textarea>
+                            <div class="small text-end text-secondary">Your email address</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-12 col-md-6">
+                            Street Address
+                        </div>
+                        <div class="mb-3 col-12 col-md-6">
+                            <label for="' . $key . '">Email Address</label>
+                            <textarea type="text" class="form-control" name="streetAddress"
+                                rows="1">#site_streetAddress#</textarea>
+                            <div class="small text-end text-secondary">eg 123 Main Street, Building 3, Apartment 2</div>
+
+                            <label for="' . $key . '">City</label>
+                            <textarea type="text" class="form-control" name="city" rows="1">#site_city#</textarea>
+                            <div class="small text-end text-secondary">City</div>
+
+                            <label for="' . $key . '">Province</label>
+                            <textarea type="text" class="form-control" name="city" rows="1">#site_province#</textarea>
+                            <div class="small text-end text-secondary">City</div>
+
+                            <label for="' . $key . '">Postal Code</label>
+                            <textarea type="text" class="form-control" name="city" rows="1">#site_postalCode#</textarea>
+                            <div class="small text-end text-secondary">Postal Code</div>
+
+                            <label for="' . $key . '">Country</label>
+                            <textarea type="text" class="form-control" name="city" rows="1">#site_country#</textarea>
+                            <div class="small text-end text-secondary">2 letter country designation</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="border rounded shadow p-3 mb-4">
+            <div class="row">
+                <div class="col-12 col-md-4 col-lg-3">
+                    <p class="fw-bold">Opening and Closing Hours</p>
+                </div>
+                <div class="col">
+                    <div class="mb-3">
+                        <input type="text" name="dow[]" value="Monday" class="form-control mb-1" />
+                        <div class="d-flex align-items-center">
+                            <label for="" class="form-label px-2">Opens</label>
+                            <input type="time" name="opens[]" class="form-control" />
+                            <label for="" class="form-label px-2">Closes</label>
+                            <input type="time" name="closes[]" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" name="dow[]" value="Tuesday" class="form-control mb-1" />
+                        <div class="d-flex align-items-center">
+                            <label for="" class="form-label p-2">Opens</label>
+                            <input type="time" name="opens[]" class="form-control" />
+                            <label for="closes_Monday" class="form-label px-2">Closes</label>
+                            <input type="time" name="closes[]" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" name="dow[]" value="Wednesday" class="form-control mb-1" />
+                        <div class="d-flex align-items-center">
+                            <label for="" class="form-label px-2">Opens</label>
+                            <input type="time" name="opens[]" class="form-control" />
+                            <label for="closes_Monday" class="form-label px-2">Closes</label>
+                            <input type="time" name="closes[]" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" name="dow[]" value="Thursday" class="form-control mb-1" />
+                        <div class="d-flex align-items-center">
+                            <label for="" class="form-label px-2">Opens</label>
+                            <input type="time" name="opens[]" class="form-control" />
+                            <label for="closes_Monday" class="form-label px-2">Closes</label>
+                            <input type="time" name="closes[]" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" name="dow[]" value="Monday" class="form-control mb-1" />
+                        <div class="d-flex align-items-center">
+                            <label for="" class="form-label px-2">Opens</label>
+                            <input type="time" name="opens[]" class="form-control" />
+                            <label for="closes_Monday" class="form-label px-2">Closes</label>
+                            <input type="time" name="closes[]" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" name="dow[]" value="Monday" class="form-control mb-1" />
+                        <div class="d-flex align-items-center">
+                            <label for="" class="form-label px-2">Opens</label>
+                            <input type="time" name="opens[]" class="form-control" />
+                            <label for="closes_Monday" class="form-label px-2">Closes</label>
+                            <input type="time" name="closes[]" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" name="dow[]" value="Monday" class="form-control mb-1" />
+                        <div class="d-flex align-items-center">
+                            <label for="" class="form-label px-2">Opens</label>
+                            <input type="time" name="opens[]" class="form-control" />
+                            <label for="closes_Monday" class="form-label px-2">Closes</label>
+                            <input type="time" name="closes[]" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                Save
+            </div>
+            <div class="col">
+                <div class="py-3">
+
+
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-floppy"></i></button>
+                </div>
+            </div>
+        </div>
+    </form>
+    -->
+    <div class="row">
+        <div class="col-12 col-md-4 col-lg-3">
+        </div>
+        <div class="col">
+            <div class="py-3">
+                <form method="post">
+                    #form#
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-floppy"></i></button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>

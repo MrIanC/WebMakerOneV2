@@ -1,0 +1,105 @@
+<div class="container mt-5">
+    <div>
+        <div class="card-body">
+            <div class="form-group">
+                <canvas id="imageCanvas" class="w-100 border"></canvas>
+            </div>
+
+        </div>
+    </div>
+    <div>
+
+        <label for="hueSlider">Hue Rotation:</label>
+        <input type="range" id="hueSlider" class="slider" min="0" max="360" value="0" />
+        <label for="saturationSlider">Saturation:</label>
+        <input type="range" id="saturationSlider" class="slider" min="0" max="200" value="100" />
+        <label for="contrastSlider">Contrast:</label>
+        <input type="range" id="contrastSlider" class="slider" min="0" max="200" value="100" />
+        <label for="brightnessSlider">Brightness:</label>
+        <input type="range" id="brightnessSlider" class="slider" min="0" max="200" value="100" />
+        <button id="resetButton">Reset</button>
+
+   
+    </div>
+</div>
+<script>
+
+    $(document).ready(function () {
+
+        const canvas = document.getElementById('imageCanvas');
+        const ctx = canvas.getContext('2d');
+        const img = new Image();
+        const filters = {
+            hue: 0,
+            saturation: 100,
+            contrast: 100,
+            brightness: 100
+        };
+
+        function applyFilters() {
+            const filterString = `
+                    hue-rotate(${filters.hue}deg)
+                    saturate(${filters.saturation}%)
+                    contrast(${filters.contrast}%)
+                    brightness(${filters.brightness}%)
+                `.trim();
+
+            ctx.filter = filterString;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        }
+
+        img.onload = function () {
+            // Draw the image onto the canvas
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        };
+
+        // Set the source of the image
+        img.src = '#image_file#'; // Update with the actual image path
+
+        img.onload = function () {
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0);
+        };
+
+        img.onerror = function () {
+            console.error('Failed to load the image.');
+        };
+
+        $('#hueSlider').on('input', function () {
+            filters.hue = $(this).val();
+            applyFilters();
+        });
+
+        $('#saturationSlider').on('input', function () {
+            filters.saturation = $(this).val();
+            applyFilters();
+        });
+
+        $('#contrastSlider').on('input', function () {
+            filters.contrast = $(this).val();
+            applyFilters();
+        });
+
+        $('#brightnessSlider').on('input', function () {
+            filters.brightness = $(this).val();
+            applyFilters();
+        });
+        $('#resetButton').on('click', function () {
+                filters.hue = 0;
+                filters.saturation = 100;
+                filters.contrast = 100;
+                filters.brightness = 100;
+
+                // Reset sliders to default values
+                $('#hueSlider').val(0);
+                $('#saturationSlider').val(100);
+                $('#contrastSlider').val(100);
+                $('#brightnessSlider').val(100);
+
+                applyFilters();
+            });
+    });
+
+</script>

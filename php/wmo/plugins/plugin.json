@@ -1,0 +1,18 @@
+{
+    "data":"order",
+    "secrets":"order",
+    "users":"order",
+    "menu": "order",
+    "palette":"order",
+    "fonts":"order",
+    "includes":"order",
+    "actions":"order",
+    "scripts":"order",
+    "media":"order",
+    "navigation":"order",
+    "content":"order",
+    "footer":"order",
+    "seo":"order",
+    "publish":"order",
+    "logout":"order"
+}

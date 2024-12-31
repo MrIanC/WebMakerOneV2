@@ -1,0 +1,11 @@
+
+{
+    "menu": {
+        "url": "?wmo=palette",
+        "bi-icon": "bi-palette",
+        "bi-text": "",
+        "link-text": "Palette",
+        "show":"yes"
+    },
+    "page": "colour"
+}

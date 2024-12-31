@@ -1,0 +1,11 @@
+
+{
+    "menu": {
+        "url": "?wmo=users",
+        "bi-icon": "bi-people-fill",
+        "bi-text": "",
+        "link-text": "Users",
+        "show":"yes"
+    },
+    "page": "users"
+}
