@@ -74,7 +74,8 @@ $JSONLD = [
             "postalCode" => $data['postalCode'],
             "addressCountry" => $data['country']
         ],
-        "openingHours" => isset($data['openingHours']) ? (function ($data) {
+        "openingHours" => isset($data['openingHours']) ? (function ( $data) {
+            if (!is_array($data)) return null;
             foreach ($data as $day => $hours) {
                 $dayOfWeek[] = [
                     "@type" => "OpeningHoursSpecification",

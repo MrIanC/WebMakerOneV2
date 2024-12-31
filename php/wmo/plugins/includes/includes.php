@@ -162,7 +162,13 @@ $includes[] = [
 ];
 $haystack[] = 'Fonts';
 
-$scripts = json_decode(file_get_contents($script_filename), true);
+if (($useDB ?? "no") == "yes") {
+    $scripts = (db_entry_exists($script_filename, $conn)) ? json_decode(db_get_contents($script_filename, $conn), true) : [];
+} else {
+    $scripts = (file_exists($script_filename)) ? json_decode(file_get_contents($script_filename), true) : [];
+}
+
+
 foreach ($scripts as $key => $value) {
     $includes[] = [
         'includes_name' => ucfirst(str_replace(".js", "", $key)),

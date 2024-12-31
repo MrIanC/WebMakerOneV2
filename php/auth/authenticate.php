@@ -17,7 +17,24 @@ if (!empty($_POST) && isset($_POST['login'])) {
 }
 
 if (!empty($_POST) && isset($_POST['username'], $_POST['password'], $_POST['login'])) {
-    echo "Login";
+
+    if (empty($users)) {
+        $dir_settings = $settings->settings['out_dir'] . "/wmo/settings";
+
+        $username = $_POST['username'];
+        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+
+        $filename = "$dir_settings/users.json";
+        $users[$username] = ['username' => $username, 'password' => $password];
+        if (($useDB ?? "no") == "yes") {
+            db_put_contents($filename, json_encode($users, JSON_PRETTY_PRINT), $conn);
+        } else {
+            file_put_contents($filename, json_encode($users, JSON_PRETTY_PRINT));
+        }
+    }
+
+
+
     $authenicationKeyPrep = $_POST['username'] . date("Ymdh");
 
     $dir_settings = $settings->settings['out_dir'] . "/wmo/settings";
@@ -28,9 +45,6 @@ if (!empty($_POST) && isset($_POST['username'], $_POST['password'], $_POST['logi
     } else {
         $users = (file_exists($filename)) ? json_decode(file_get_contents($filename), true) : [];
     }
-
-
-
 
     $authUser = $users[$_POST['username']] ?? null;
 
@@ -72,6 +86,9 @@ if (!(($_SESSION['authtoken'] ?? false) === false)) {
 
 }
 
+
+
+
 if (($_SESSION['authtoken'] ?? false) === false) {
     $loginpage = new HTML_Structure();
     $loginpage->inject("head", '<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>', "end");
@@ -79,7 +96,11 @@ if (($_SESSION['authtoken'] ?? false) === false) {
     $loginpage->inject("head", '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg==" crossorigin="anonymous" referrerpolicy="no-referrer" />', "end");
     $loginpage->inject("head", '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />', "end");
 
-    $loginpage->inject('body', file_get_contents(__DIR__ . "/login_page.html"));
+    if (empty($users)) {
+        $loginpage->inject('body', file_get_contents(__DIR__ . "/new_user.html"));
+    } else {
+        $loginpage->inject('body', file_get_contents(__DIR__ . "/login_page.html"));
+    }
     echo $loginpage->doc->saveHTML();
     exit;
 }

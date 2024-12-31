@@ -46,7 +46,7 @@ if (isset($_POST['update'])) {
         fclose($fp);
     }
     if ($go) {
-        $extractPath = $_SERVER['DOCUMENT_ROOT'];
+        $extractPath = $_SERVER['DOCUMENT_ROOT'] . "/app";
 
         $zip = new ZipArchive;
         if ($zip->open($zipFile) === TRUE) {

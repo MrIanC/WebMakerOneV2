@@ -66,11 +66,20 @@ if (isset($_POST['font_name'], $_POST['useFont'])) {
 $fontcache = "$dir_settings/google_font.json";
 if (($useDB ?? "no") == "yes") {
     if (db_entry_exists($fontcache, $conn)) {
-        echo "gf_exists";
         $response = db_get_contents($fontcache, $conn);
     } else {
-        $response = file_get_contents($font_url);
-        db_put_contents($fontcache, $response, $conn);
+        try {
+            $response = @file_get_contents($font_url);
+            if ($response === FALSE) {
+            } else {
+                db_put_contents($fontcache, $response, $conn);
+            }
+
+        } catch (error) {
+            $response = false;
+        }
+
+
     }
 } else {
     if (file_exists($fontcache)) {
@@ -123,36 +132,36 @@ if ($response === FALSE) {
             </div>'
         );
     }
-}
-
-$pagination = '<a href="?wmo=fonts&amp;search=' . $search_term . '&amp;startindex=' . ((($startIndex - $itemsPerPage) >= 0) ? ($startIndex - $itemsPerPage) : 0) . '" class="btn btn-primary btn-sm mx-1">Prev</a>';
-$pagination .= '<a href="?wmo=fonts&amp;search=' . $search_term . '&amp;startindex=' . ($startIndex + $itemsPerPage) . '" class="btn btn-primary btn-sm mx-1">Next</a>';
 
 
-$font_use['headings'] ??= "";
-$font_use['paragraph'] ??= "";
-$font_use['nav'] ??= "";
+    $pagination = '<a href="?wmo=fonts&amp;search=' . $search_term . '&amp;startindex=' . ((($startIndex - $itemsPerPage) >= 0) ? ($startIndex - $itemsPerPage) : 0) . '" class="btn btn-primary btn-sm mx-1">Prev</a>';
+    $pagination .= '<a href="?wmo=fonts&amp;search=' . $search_term . '&amp;startindex=' . ($startIndex + $itemsPerPage) . '" class="btn btn-primary btn-sm mx-1">Next</a>';
 
 
-if (!isset($font_html)) {
-    $font_html[] = "No font Found";
-}
+    $font_use['headings'] ??= "";
+    $font_use['paragraph'] ??= "";
+    $font_use['nav'] ??= "";
 
-//
-$font_heading = '<div>
+
+    if (!isset($font_html)) {
+        $font_html[] = "No font Found";
+    }
+
+    //
+    $font_heading = '<div>
     <link href="https://fonts.googleapis.com/css2?family=' . $font_use['headings'] . '" rel="stylesheet" />
     <div class="pb-3" style="font-family: ' . $font_use['headings'] . ';">' . $font_use['headings'] . '</div>
     <div class="h1" style="font-family: ' . $font_use['headings'] . ';">' . $font_use['headings'] . '</div>
     <div class="h2" style="font-family: ' . $font_use['headings'] . ';">' . $font_use['headings'] . '</div>
     <div class="h3" style="font-family: ' . $font_use['headings'] . ';">' . $font_use['headings'] . '</div>
 </div>';
-$font_paragraph = '<div>
+    $font_paragraph = '<div>
     <link href="https://fonts.googleapis.com/css2?family=' . $font_use['paragraph'] . '" rel="stylesheet" />
     <div class="pb-3" style="font-family: ' . $font_use['paragraph'] . ';">' . $font_use['paragraph'] . '</div>
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
 
 </div>';
-$font_navigation = '<div>
+    $font_navigation = '<div>
     <link href="https://fonts.googleapis.com/css2?family=' . $font_use['nav'] . '" rel="stylesheet" />
       <div class="pb-3" style="font-family: ' . $font_use['nav'] . ';">' . $font_use['nav'] . '</div>
       <div class="btn btn-link" style="font-family: ' . $font_use['nav'] . ';">Home</div>
@@ -161,36 +170,36 @@ $font_navigation = '<div>
       <div class="btn btn-secondary" style="font-family: ' . $font_use['nav'] . ';">Home</div>
 </div>';
 
-$css_file = $dir_content . "/css/fonts.css";
+    $css_file = $dir_content . "/css/fonts.css";
 
 
-$fonts = json_decode($response, true);
-$font_css_url = [];
-foreach ($fonts['items'] as $key => $value) {
-    if ($font_use['headings'] == $value['family']) {
-        $font_css_url['headings'] = $value['files']['regular'] ?? $value['files'][array_key_first($value['files'])];
+    $fonts = json_decode($response, true);
+    $font_css_url = [];
+    foreach ($fonts['items'] as $key => $value) {
+        if ($font_use['headings'] == $value['family']) {
+            $font_css_url['headings'] = $value['files']['regular'] ?? $value['files'][array_key_first($value['files'])];
+        }
+        if ($font_use['paragraph'] == $value['family']) {
+            $font_css_url['paragraph'] = $value['files']['regular'] ?? $value['files'][array_key_first($value['files'])];
+        }
+        if ($font_use['nav'] == $value['family']) {
+            $font_css_url['nav'] = $value['files']['regular'] ?? $value['files'][array_key_first($value['files'])];
+        }
     }
-    if ($font_use['paragraph'] == $value['family']) {
-        $font_css_url['paragraph'] = $value['files']['regular'] ?? $value['files'][array_key_first($value['files'])];
+
+    $cssFileContents = str_replace(
+        ['#heading-font#', '#paragraph-font#', '#navigation-font#'],
+        [$font_css_url['headings'] ?? "", $font_css_url['paragraph'] ?? "", $font_css_url['nav'] ?? ""],
+        file_get_contents(__DIR__ . "/fonts.css")
+    );
+
+    if (($useDB ?? "no") == "yes") {
+        db_put_contents($css_file, $cssFileContents, $conn);
+    } else {
+        file_put_contents($css_file, $cssFileContents);
     }
-    if ($font_use['nav'] == $value['family']) {
-        $font_css_url['nav'] = $value['files']['regular'] ?? $value['files'][array_key_first($value['files'])];
-    }
+
 }
-
-$cssFileContents = str_replace(
-    ['#heading-font#', '#paragraph-font#', '#navigation-font#'],
-    [$font_css_url['headings'] ?? "", $font_css_url['paragraph'] ?? "", $font_css_url['nav'] ?? ""],
-    file_get_contents(__DIR__ . "/fonts.css")
-);
-
-if (($useDB ?? "no") == "yes") {
-    db_put_contents($css_file, $cssFileContents, $conn);
-} else {
-    file_put_contents($css_file, $cssFileContents);
-}
-
-
 
 
 if ($font_api == "") {

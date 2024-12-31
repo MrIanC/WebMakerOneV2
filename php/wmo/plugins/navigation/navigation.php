@@ -27,9 +27,6 @@ $datalist_options = "";
 $navigation_text = "";
 $dir_settings = $settings->settings['out_dir'] . "/wmo/settings";
 $dir_content = $settings->settings['out_dir'] . "/wmo/content";
-if (!is_dir($dir_settings)) {
-    mkdir($dir_settings);
-}
 
 $filename = "$dir_settings/navigation.json";
 
@@ -37,6 +34,10 @@ if (($useDB ?? "no") == "yes") {
     $navigation = (db_entry_exists($filename, $conn)) ? json_decode(db_get_contents($filename, $conn), true) : [];
 } else {
     $navigation = (file_exists($filename)) ? json_decode(file_get_contents($filename), true) : [];
+    if (!is_dir($dir_settings)) {
+        mkdir($dir_settings);
+    }
+    
 }
 
 

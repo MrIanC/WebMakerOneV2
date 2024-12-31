@@ -42,14 +42,14 @@ if (isset($_POST['save'])) {
     $tmp = $_POST;
     unset($tmp['save']);
     $actions[$_POST['save']]['options'] = $tmp;
-    
+
     if (($useDB ?? "no") == "yes") {
         db_put_contents($filename, json_encode($actions, JSON_PRETTY_PRINT), $conn);
     } else {
         file_put_contents($filename, json_encode($actions, JSON_PRETTY_PRINT));
-    }    
-    
-    
+    }
+
+
     $fullUri = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     header("Location: $fullUri");
 }
@@ -63,8 +63,8 @@ if (isset($_POST['enable'])) {
         db_put_contents($filename, json_encode($actions, JSON_PRETTY_PRINT), $conn);
     } else {
         file_put_contents($filename, json_encode($actions, JSON_PRETTY_PRINT));
-    }    
-    
+    }
+
     $fullUri = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     header("Location: $fullUri");
 }
@@ -79,23 +79,23 @@ if (isset($_POST['disable'])) {
         db_put_contents($filename, json_encode($actions, JSON_PRETTY_PRINT), $conn);
     } else {
         file_put_contents($filename, json_encode($actions, JSON_PRETTY_PRINT));
-    }    
-    
+    }
+
     $fullUri = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     header("Location: $fullUri");
 }
 
 if (isset($_POST['delete'])) {
     unset($actions[$_POST['delete']]);
-    
+
     if (($useDB ?? "no") == "yes") {
         db_put_contents($filename, json_encode($actions, JSON_PRETTY_PRINT), $conn);
-        db_unlink("$dir_content/actions/{$_POST['delete']}",$conn);
+        db_unlink("$dir_content/actions/{$_POST['delete']}", $conn);
     } else {
         file_put_contents($filename, json_encode($actions, JSON_PRETTY_PRINT));
         unlink("$dir_content/actions/{$_POST['delete']}");
     }
-    
+
     unlink(__DIR__ . "/default/{$_POST['delete']}");
 
     $fullUri = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
@@ -186,25 +186,25 @@ foreach (glob($defaultactiondir) as $files) {
     $src = [];
     $rep = [];
 
-    foreach($actions[$filename]['options']??[] as $key =>$value) {
+    foreach ($actions[$filename]['options'] ?? [] as $key => $value) {
         $src[] = "#$key#";
         $rep[] = $value;
     }
 
-    if (!is_dir("$dir_content/actions")) {
-        mkdir("$dir_content/actions");
-    }
 
     $actionFiles = "$dir_content/actions/$filename";
     $editedActions = str_replace($src, $rep, $fileContents);
     if (($useDB ?? "no") == "yes") {
-        db_put_contents($actionFiles,$editedActions, $conn);
+        db_put_contents($actionFiles, $editedActions, $conn);
     } else {
+        if (!is_dir("$dir_content/actions")) {
+            mkdir("$dir_content/actions");
+        }
         file_put_contents("$dir_content/actions/$filename", $editedActions);
     }
 
 
-    
+
 
 }
 
