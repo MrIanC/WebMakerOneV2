@@ -13,7 +13,7 @@ $msg[] = "";
 if (isset($_POST['update'])) {
     $go = true;
 
-    $url = 'https://github.com/MrIanC/WebMakerOneV2/archive/refs/heads/main.zip';
+    $url = 'https://github.com/MrIanC/WebMakerOneV2/archive/refs/heads/master.zip';
     $zipFile = __DIR__ . '/install.zip';
 
     if ($go) {
@@ -81,7 +81,7 @@ if (isset($_POST['update'])) {
             unlink($zipFile);
             $msg[] = 'Files unzipped successfully!';
 
-            $commits = json_decode(file_get_contents("https://api.github.com/repos/MrIanC/WebMakerOneV2/commits?sha=main&per_page=1", false, stream_context_create(['http' => ['header' => "User-Agent: PHP\r\n"]])), true);
+            $commits = json_decode(file_get_contents("https://api.github.com/repos/MrIanC/WebMakerOneV2/commits?sha=master&per_page=1", false, stream_context_create(['http' => ['header' => "User-Agent: PHP\r\n"]])), true);
             $gitDate = $commits[0]['commit']['author']['date'];
             db_put_contents($versionFilename, json_encode(["wmoV2" => $gitDate], JSON_PRETTY_PRINT & JSON_UNESCAPED_SLASHES), $conn);
 
@@ -92,13 +92,15 @@ if (isset($_POST['update'])) {
     }
 }
 
+$commits = json_decode(file_get_contents("https://api.github.com/repos/MrIanC/WebMakerOneV2/commits?sha=master&per_page=1", false, stream_context_create(['http' => ['header' => "User-Agent: PHP\r\n"]])), true);
+$gitDate = $commits[0]['commit']['author']['date'];
 
 
 
 $version = (file_exists($versionFilename)) ? json_decode(file_get_contents($versionFilename), true) : ["wmoV2" => "ORIGIN"];
 
 $html_body = str_replace(
-    ['#version#', "#downloadLog#"],
-    [$version['wmoV2'], implode($msg ?? [])],
+    ['#version#', "#current_version#","#downloadLog#"],
+    [$version['wmoV2'], $gitDate, implode($msg ?? [])],
     file_get_contents(__DIR__ . "/form.html")
 );
