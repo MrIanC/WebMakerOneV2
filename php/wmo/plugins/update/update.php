@@ -95,12 +95,18 @@ if (isset($_POST['update'])) {
 $commits = json_decode(file_get_contents("https://api.github.com/repos/MrIanC/WebMakerOneV2/commits?sha=master&per_page=1", false, stream_context_create(['http' => ['header' => "User-Agent: PHP\r\n"]])), true);
 $gitDate = $commits[0]['commit']['author']['date'];
 
+if (($useDB ?? "no") == "yes") {
+    $version = (db_entry_exists($versionFilename, $conn)) ? json_decode(db_get_contents($versionFilename, $conn), true) : ["wmoV2" => "ORIGIN"];
+} else {
+    $version = (file_exists($versionFilename)) ? json_decode(file_get_contents($versionFilename), true) : ["wmoV2" => "ORIGIN"];
+}
 
 
-$version = (file_exists($versionFilename)) ? json_decode(file_get_contents($versionFilename), true) : ["wmoV2" => "ORIGIN"];
+
+
 
 $html_body = str_replace(
-    ['#version#', "#current_version#","#downloadLog#"],
+    ['#version#', "#current_version#", "#downloadLog#"],
     [$version['wmoV2'], $gitDate, implode($msg ?? [])],
     file_get_contents(__DIR__ . "/form.html")
 );
