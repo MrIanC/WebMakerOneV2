@@ -17,7 +17,6 @@ if (($useDB ?? "no") == "yes") {
 }
 
 
-
 if (!empty($_POST) && isset($_POST['login'])) {
     $_POST['login'] ??= "na";
     if ($_POST['login'] === "out") {
@@ -45,13 +44,9 @@ if (!empty($_POST) && isset($_POST['username'], $_POST['password'], $_POST['logi
         }
     }
 
-
-
     $authenicationKeyPrep = $_POST['username'] . date("Ymdh");
 
     $authUser = $users[$_POST['username']] ?? null;
-
-    print_r($authUser);
 
     if (isset($authUser['username'], $authUser['password'])) {
         if (password_verify($_POST['password'], $authUser['password'])) {
@@ -105,6 +100,7 @@ if (($_SESSION['authtoken'] ?? false) === false) {
         $loginpage->inject('body', file_get_contents(__DIR__ . "/login_page.html"));
     }
     echo $loginpage->doc->saveHTML();
+
     exit;
 }
 
