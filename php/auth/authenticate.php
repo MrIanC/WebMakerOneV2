@@ -95,6 +95,7 @@ if (($_SESSION['authtoken'] ?? false) === false) {
     $loginpage->inject("head", '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />', "end");
 
     if (empty($users)) {
+        print_r($users);
         $loginpage->inject('body', file_get_contents(__DIR__ . "/new_user.html"));
     } else {
         $loginpage->inject('body', file_get_contents(__DIR__ . "/login_page.html"));
