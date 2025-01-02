@@ -34,7 +34,16 @@ if (isset($_GET['wmo'])) {
         include dirname($file) . "/" . $decode['page'] . ".php";
     }
 } else {
-    $html_body = file_get_contents(__DIR__ . "/main.html");
+    $help_sections = "";
+    foreach (glob(__DIR__ . "/plugins/*/help.html") as $file) {
+        $help_sections .= file_get_contents($file);
+    }
+    
+    $html_body = str_replace(
+        ["#help#"],
+        [$help_sections],
+        file_get_contents(__DIR__ . "/main.html")
+    );
 }
 
 $all = str_replace(["#menu#", "#content#"], [$wmo_menu_html, $html_body], file_get_contents(__DIR__ . "/layout.html"));
