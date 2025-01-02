@@ -120,6 +120,7 @@ if (($useDB ?? "no") == "yes") {
 } else {
     $landjson = file_exists($landingfilename) ? json_decode(file_get_contents($landingfilename), true) : [];
 }
+
 $landingpagename = $landjson['landing'] ?? "";
 
 if (($useDB ?? "no") == "yes") {
@@ -143,9 +144,19 @@ if ($landingpagename == '')
 if (empty($landjson))
     $landing_exists = "Please set a landing page";
 
-if (!file_exists("$dir_content_pages/$landingpagename")) {
-    $landing_exists = "Please set a landing page";
+if (($useDB ?? "no") == "yes") {
+    if (!db_entry_exists("$dir_content_pages/$landingpagename", $conn)) {
+        $landing_exists = "Please set a landing page";
+    }
+} else {
+    if (!file_exists("$dir_content_pages/$landingpagename")) {
+        $landing_exists = "Please set a landing page";
+    }
+
 }
+
+
+
 if (($useDB ?? "no") == "yes") {
     foreach (db_glob("$dir_content_pages/*.bak", $conn) as $files) {
         $page_name = basename($files);

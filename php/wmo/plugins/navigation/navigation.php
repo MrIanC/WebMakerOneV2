@@ -60,7 +60,7 @@ if (isset($_POST['navigation_text'])) {
 
 if (isset($_POST['delete'])) {
     foreach ($navigation as $key => $value) {
-        echo $value['navtext'];
+        
         if ($value['navtext'] == $_POST['delete']) {
             unset($navigation[$key]);
         }
@@ -77,7 +77,7 @@ if (isset($_POST['delete'])) {
 
 if (isset($_POST['move'])) {
     foreach ($navigation as $key => $value) {
-        echo $value['navtext'];
+        
         if ($value['navtext'] == $_POST['move']) {
             $move = $key - 1;
             if ($move >= 0) {
@@ -122,15 +122,16 @@ foreach ($navigation as $key => $value) {
 }
 
 
-$filename = dirname($settings->settings['plugins']['wmo']) . "/content/footer/footer.html";
+$navigation_file_name = "$dir_content/header/header.html";
 $navigation_exists = "Navigation file does not exist";
 
+
 if (($useDB ?? "no") == "yes") {
-    if (db_entry_exists($filename, $conn)) {
+    if (db_entry_exists($navigation_file_name, $conn)) {
         $navigation_exists = "Navigation file exists";
     }
 } else {
-    if (file_exists($filename)) {
+    if (file_exists($navigation_file_name)) {
         $navigation_exists = "Navigation file exists";
     }
 

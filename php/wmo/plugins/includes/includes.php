@@ -160,9 +160,8 @@ if (($useDB ?? "no") == "yes") {
     file_put_contents($filename, json_encode($includes, JSON_PRETTY_PRINT));
 }
 
+
 //dont save past this point
-
-
 $includes[] = [
     'includes_name' => 'Palette',
     'includes_url' => '/css/palette.css',
