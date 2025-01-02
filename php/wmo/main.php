@@ -33,6 +33,9 @@ if (isset($_GET['wmo'])) {
     if (isset($decode['page'])) {
         include dirname($file) . "/" . $decode['page'] . ".php";
     }
+} else {
+    $html_body = file_get_contents(__DIR__ . "/main.html");
 }
+
 $all = str_replace(["#menu#", "#content#"], [$wmo_menu_html, $html_body], file_get_contents(__DIR__ . "/layout.html"));
 $htmlDOC->inject("body", $all, "start");

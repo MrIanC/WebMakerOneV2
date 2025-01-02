@@ -92,25 +92,35 @@ if (isset($_POST['update'])) {
     }
 }
 
-$commits = json_decode(file_get_contents("https://api.github.com/repos/MrIanC/WebMakerOneV2/commits?sha=master&per_page=1", false, stream_context_create(['http' => ['header' => "User-Agent: PHP\r\n"]])), true);
-$gitDate = $commits[0]['commit']['author']['date'];
-
 if (($useDB ?? "no") == "yes") {
     $version = (db_entry_exists($versionFilename, $conn)) ? json_decode(db_get_contents($versionFilename, $conn), true) : ["wmoV2" => "ORIGIN"];
 } else {
     $version = (file_exists($versionFilename)) ? json_decode(file_get_contents($versionFilename), true) : ["wmoV2" => "ORIGIN"];
 }
 
-if ($gitDate != $version['wmoV2']) {
-    $msg[] = "New Version Available!";
-    
+$commits = json_decode(@file_get_contents("https://api.github.com/repos/MrIanC/WebMakerOneV2/commits?sha=master&per_page=1", false, stream_context_create(['http' => ['header' => "User-Agent: PHP\r\n"]])), true);
+foreach ($http_response_header ?? [] as $header) {
+    if (str_contains($header, "X-RateLimit-Remaining: 0")) {
+        $msg[] = "Github API Rate Limit Reached!";
+        $msg[] = "Please try again later.";
+        $commits = null;
+    }
 }
 
+if (isset($commits)) {
+    $gitDate = $commits[0]['commit']['author']['date'] ?? "Not Available";
+    if ($gitDate != $version['wmoV2']) {
+        $msg[] = "New Version Available!";
 
-
+    } else {
+        $msg[] = "This Version is Up to Date!";
+    }
+} else {
+    $gitDate = "Not Available";
+}
 
 $html_body = str_replace(
-    ['#version#', "#current_version#", "#logs#"],
-    [$version['wmoV2'], $gitDate, create_log_from_array($msg ?? [])],
+    ['#version#', "#current_version#", "#logs#", "#dlavail#"],
+    [$version['wmoV2'], $gitDate, create_log_from_array($msg ?? []), $commits ? "" : 'disabled="true"'],
     file_get_contents(__DIR__ . "/form.html")
 );
