@@ -63,11 +63,11 @@ if ($go) {
                 if (substr($filePath, -1) == '/') {
                     @mkdir("$extractPath/$newPath", 0755, true);
                 } else {
-                    $msg[] = "extracting: $extractPath/$newPath </br>";
+                    $msg[] = "extracting: $extractPath/$newPath";
                     if (copy("zip://$zipFile#$filePath", "$extractPath/$newPath")) {
-                        $msg[] = "extracted: $extractPath/$newPath </br>";
+                        $msg[] = "extracted: $extractPath/$newPath";
                     } else {
-                        $msg[] = "failed to extract: $extractPath/$newPath </br>";
+                        $msg[] = "failed to extract: $extractPath/$newPath";
                     }
                 }
             }
@@ -80,7 +80,6 @@ if ($go) {
         }
 
         $msg[] = 'Files unzipped ' . $i . ' successfully!';
-        $msg[] = '<button id="continue" class="btn btn-primary">Continue</button>';
 
         $commits = json_decode(file_get_contents("https://api.github.com/repos/MrIanC/WebMakerOneV2/commits?sha=master&per_page=1", false, stream_context_create(['http' => ['header' => "User-Agent: PHP\r\n"]])), true);
         $gitDate = $commits[0]['commit']['author']['date'];
@@ -116,22 +115,25 @@ foreach ($http_response_header ?? [] as $header) {
         $commits = null;
     }
 }
+
 if (isset($commits)) {
     $gitDate = $commits[0]['commit']['author']['date'] ?? "Not Available";
     if ($gitDate != $version['wmoV2']) {
         $msg[] = "New Version Available!";
-
+        $disableDL = "";
     } else {
         $msg[] = "This Version is Up to Date!";
+        $disableDL = 'disabled="disabled"';
     }
 } else {
     $gitDate = "Not Available";
+    $disableDL = 'disabled="disabled"';
 }
 
 create_log_from_array($msg ?? []);
 
 $html_body = str_replace(
     ['#version#', "#current_version#", "#logs#", "#dlavail#"],
-    [$version['wmoV2'], $gitDate, create_log_from_array($msg ?? []), $commits ? "" : 'disabled="true"'],
+    [$version['wmoV2'], $gitDate, create_log_from_array($msg ?? []), $disableDL],
     file_get_contents(__DIR__ . "/form.html")
 );
