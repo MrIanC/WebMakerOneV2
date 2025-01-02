@@ -42,7 +42,8 @@ function findEmptyDirs($path)
     return $emptyDirs;
 }
 
-function create_log_from_array($array) {
+function create_log_from_array($array)
+{
     $logs = [];
     foreach ($array as $key => $value) {
         if (!is_string($value)) {
@@ -134,13 +135,13 @@ function build_public_from_db()
         $landing_filename = "$dir_settings/landing.json";
         $favicon_filename = "$dir_settings/favicon.json";
         $seo_filename = "$dir_settings/seo.json";
-        
+
         //files
         $fonts_filename = "$dir_content/css/fonts.css";
         $palette_filename = "$dir_content/css/palette.css";
         $header_html_filename = "$dir_content/header/header.html";
         $footer_html_filename = "$dir_content/footer/footer.html";
-        $jsonld_data_filename ="$dir_settings/jsonld.json";
+        $jsonld_data_filename = "$dir_settings/jsonld.json";
 
         //settings
         $includes = (db_entry_exists($includes_filename, $conn)) ? json_decode(db_get_contents($includes_filename, $conn), true) : [];
@@ -157,10 +158,10 @@ function build_public_from_db()
         $palette_file = (db_entry_exists($palette_filename, $conn)) ? db_get_contents($palette_filename, $conn) : "";
         $header_file = (db_entry_exists($header_html_filename, $conn)) ? db_get_contents($header_html_filename, $conn) : "";
         $footer_file = (db_entry_exists($footer_html_filename, $conn)) ? db_get_contents($footer_html_filename, $conn) : "";
-        
+
         //sortof files... decodes and encodes thing
         $jsonld_data = (db_entry_exists($jsonld_data_filename, $conn)) ? json_decode(db_get_contents($jsonld_data_filename, $conn), true) : [];
-        
+
         //generated
         $landingpagename = "/" . str_replace(".html", "", ($landing['landing'] ?? ""));
 
@@ -271,7 +272,7 @@ function build_public_from_db()
             } else {
                 $tmp .= "json, ";
             }
-            
+
 
             $logs[] = rtrim($tmp, ", ") . "] - Settings Loaded";
         }
@@ -431,23 +432,36 @@ function build_public_from_db()
             $menuItemsUl = $doc->getElementById('menuItems');
             $header = $doc->getElementById("realheader");
 
-            foreach ($menu as $title => $href) {
-                $tmp_pagename = ($href == "/") ? $landingpagename : $href;
-                $newLi = ($pagename == $tmp_pagename) ? $templateLiActive->cloneNode(true) : $templateLi->cloneNode(true);
-                $link = $newLi->getElementsByTagName('a')->item(0);
-                $link->setAttribute('href', $href);
-                $link->textContent = $title;
-                $menuItemsUl->appendChild($newLi);
-            }
-            $menuItemsUl->removeChild($templateLiActive);
-            $menuItemsUl->removeChild($templateLi);
-            $navigation[$pagename] = (function ($header, $dom) {
-                $innerHtml = "";
-                foreach ($header->childNodes as $child) {
-                    $innerHtml .= $dom->saveHTML($child);
+            if (isset($templateLiActive) && isset($templateLi) && isset($menuItemsUl)) {
+
+                foreach ($menu as $title => $href) {
+                    $tmp_pagename = ($href == "/") ? $landingpagename : $href;
+                    $newLi = ($pagename == $tmp_pagename) ? $templateLiActive->cloneNode(true) : $templateLi->cloneNode(true);
+                    $link = $newLi->getElementsByTagName('a')->item(0);
+                    $link->setAttribute('href', $href);
+                    $link->textContent = $title;
+                    $menuItemsUl->appendChild($newLi);
                 }
-                return $innerHtml;
-            })($header, $doc);
+                $menuItemsUl->removeChild($templateLiActive);
+                $menuItemsUl->removeChild($templateLi);
+                $navigation[$pagename] = (function ($header, $dom) {
+                    $innerHtml = "";
+                    foreach ($header->childNodes as $child) {
+                        $innerHtml .= $dom->saveHTML($child);
+                    }
+                    return $innerHtml;
+                })($header, $doc);
+            } else {
+                foreach ($menu as $title => $href) {
+                    $navigation[$pagename] = (function ($header, $dom) {
+                        $innerHtml = "";
+                        foreach ($header->childNodes as $child) {
+                            $innerHtml .= $dom->saveHTML($child);
+                        }
+                        return $innerHtml;
+                    })($header, $doc);
+                }
+            }
         }
         $logs[] = '[' . rtrim($tmp, ", ") . '] - Navigation Built';
         $logs[] = (memory_get_usage() - $startBytes) . " bytes";
@@ -504,9 +518,9 @@ function build_public_from_db()
             $HTML[] = $seo[$menuName]['schemaMarkup'] ?? "{}";
             $HTML[] = '</script>';
             $HTML[] = '<script type="application/ld+json">';
-            $HTML[] = json_encode($jsonld_data,JSON_PRETTY_PRINT & JSON_UNESCAPED_SLASHES) ?? "{}";
+            $HTML[] = json_encode($jsonld_data, JSON_PRETTY_PRINT & JSON_UNESCAPED_SLASHES) ?? "{}";
             $HTML[] = '</script>';
-            
+
             // Bottom of Head includes_html
             foreach ($includes_html['Head - End'] ?? [] as $val) {
                 $HTML[] = $val;
@@ -558,10 +572,9 @@ function build_public_from_db()
         $logs[] = '[' . rtrim($tmp, ", ") . '] - Created Files';
         $logs[] = '[' . rtrim($tmp3, ": ") . '] - Copied and Verified Files ';
     }
-
-    if ($go) {
-        $landing_index =  "{$baseDir}$landingpagename/index.html";
-        if (copy($landing_index,  "$baseDir/index.html")) {
+    if ($go) { //build the landing page
+        $landing_index = "{$baseDir}$landingpagename/index.html";
+        if (copy($landing_index, "$baseDir/index.html")) {
             $logs[] = "[$landingpagename] - Created Landing Page";
             $logs[] = (memory_get_usage() - $startBytes) . " bytes";
         } else {

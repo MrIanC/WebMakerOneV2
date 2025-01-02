@@ -11,14 +11,14 @@ if (!isset($_POST['deployment'])) {
             break;
         case "public":
             if (($useDB ?? "no") == "yes") {
-                $html_body = str_replace("#logs#", implode(build_public_from_db()), file_get_contents(__DIR__ . "/construction_results.html"));
+                $html_body = str_replace("#logs#", build_public_from_db(), file_get_contents(__DIR__ . "/construction_results.html"));
             } else {
                 $html_body = str_replace("#logs#", implode(build_public()), file_get_contents(__DIR__ . "/construction_results.html"));
             }
             break;
         case "zip_save":
             include __DIR__ . "/zip.php";
-            $html_body = str_replace("#logs#", implode($logs), file_get_contents(__DIR__ . "/construction_results.html"));
+            $html_body = str_replace("#logs#", $log_string, file_get_contents(__DIR__ . "/construction_results.html"));
             break;
     }
 }

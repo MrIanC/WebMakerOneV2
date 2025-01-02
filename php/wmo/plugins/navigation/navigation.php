@@ -123,16 +123,16 @@ foreach ($navigation as $key => $value) {
 
 
 $navigation_file_name = "$dir_content/header/header.html";
-$navigation_exists = "Navigation file does not exist";
+$navigation_exists = "Header file does not exist";
 
 
 if (($useDB ?? "no") == "yes") {
     if (db_entry_exists($navigation_file_name, $conn)) {
-        $navigation_exists = "Navigation file exists";
+        $navigation_exists = "Header file exists";
     }
 } else {
     if (file_exists($navigation_file_name)) {
-        $navigation_exists = "Navigation file exists";
+        $navigation_exists = "Header file exists";
     }
 
 }

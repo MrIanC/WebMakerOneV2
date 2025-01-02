@@ -14,7 +14,7 @@ $dir_content = $settings->settings['out_dir'] . "/wmo/content";
 $fontsettings = "$dir_settings/font.json";
 $filename = "$dir_settings/apikeys.json";
 $search_term = $_GET['search'] ?? "";
-
+$css_file = $dir_content . "/css/fonts.css";
 if (($useDB ?? "no") == "yes") {
     $font_use = (db_entry_exists($fontsettings, $conn)) ? json_decode(db_get_contents($fontsettings, $conn), true) : [];
     $apis = (db_entry_exists($filename, $conn)) ? json_decode(db_get_contents($filename, $conn), true) : [];
@@ -170,7 +170,7 @@ if ($response === FALSE) {
       <div class="btn btn-secondary" style="font-family: ' . $font_use['nav'] . ';">Home</div>
 </div>';
 
-    $css_file = $dir_content . "/css/fonts.css";
+    
 
 
     $fonts = json_decode($response, true);
@@ -204,6 +204,13 @@ if ($response === FALSE) {
 
 if ($font_api == "") {
     $html_body = file_get_contents(__DIR__ . "/api.html");
+    if (($useDB ?? "no") == "yes") {
+        db_put_contents($fontsettings, json_encode($font_use, JSON_PRETTY_PRINT), $conn);
+        db_put_contents($css_file, "body{}", $conn);
+    } else {
+        file_put_contents($fontsettings, json_encode($font_use, JSON_PRETTY_PRINT));
+        file_put_contents($css_file, "body{}");
+    }
 } else {
 
     $html_body = str_replace(
