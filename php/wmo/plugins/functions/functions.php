@@ -41,6 +41,39 @@ function findEmptyDirs($path)
 
     return $emptyDirs;
 }
+
+function create_log_from_array($array) {
+    $logs = [];
+    foreach ($array as $key => $value) {
+        if (!is_string($value)) {
+            continue; // Skip non-string values
+        }
+
+        $words = explode(" ", $value);
+        $tmp = "";
+        $chunks = [];
+
+        foreach ($words as $word) {
+            // Add word to the current line if it fits, else store the current line
+            if (strlen($tmp . $word) + 1 > 60) { // +1 for the space
+                $chunks[] = trim($tmp); // Trim to remove leading space
+                $tmp = "";
+            }
+            $tmp .= " " . $word;
+        }
+
+        // Add the last chunk
+        if (!empty($tmp)) {
+            $chunks[] = trim($tmp);
+        }
+
+        // Append chunks to $logs
+        foreach ($chunks as $chunk) {
+            $logs[] = "$chunk\n";
+        }
+    }
+    return implode($logs);
+}
 function build_public_from_db()
 {
     $startBytes = memory_get_usage();
@@ -541,38 +574,7 @@ function build_public_from_db()
         $logs[] = "Build has completed Successfully";
     }
 
-    $logsTmp = $logs;
-    $logs = [];
-    foreach ($logsTmp as $key => $value) {
-        if (!is_string($value)) {
-            continue; // Skip non-string values
-        }
-
-        $words = explode(" ", $value);
-        $tmp = "";
-        $chunks = [];
-
-        foreach ($words as $word) {
-            // Add word to the current line if it fits, else store the current line
-            if (strlen($tmp . $word) + 1 > 60) { // +1 for the space
-                $chunks[] = trim($tmp); // Trim to remove leading space
-                $tmp = "";
-            }
-            $tmp .= " " . $word;
-        }
-
-        // Add the last chunk
-        if (!empty($tmp)) {
-            $chunks[] = trim($tmp);
-        }
-
-        // Append chunks to $logs
-        foreach ($chunks as $chunk) {
-            $logs[] = "$chunk\n";
-        }
-    }
-
-    return $logs;
+    return create_log_from_array($logs);
 
 
 }

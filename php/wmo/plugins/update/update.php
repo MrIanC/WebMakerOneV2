@@ -101,12 +101,15 @@ if (($useDB ?? "no") == "yes") {
     $version = (file_exists($versionFilename)) ? json_decode(file_get_contents($versionFilename), true) : ["wmoV2" => "ORIGIN"];
 }
 
+if ($gitDate != $version['wmoV2']) {
+    $msg[] = "New Version Available!";
+}
 
 
 
 
 $html_body = str_replace(
-    ['#version#', "#current_version#", "#downloadLog#"],
-    [$version['wmoV2'], $gitDate, implode($msg ?? [])],
+    ['#version#', "#current_version#", "#logs#"],
+    [$version['wmoV2'], $gitDate, create_log_from_array($msg ?? [])],
     file_get_contents(__DIR__ . "/form.html")
 );
