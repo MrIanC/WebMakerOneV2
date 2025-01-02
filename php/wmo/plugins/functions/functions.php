@@ -77,10 +77,12 @@ function create_log_from_array($array)
 }
 function build_public_from_db()
 {
-    $startBytes = memory_get_usage();
 
     global $settings;
     global $conn;
+
+    $startBytes = memory_get_usage();
+
     $baseDir = $_SERVER['DOCUMENT_ROOT'];
 
     $dir_settings = $settings->settings['out_dir'] . "/wmo/settings";
@@ -582,14 +584,11 @@ function build_public_from_db()
             $go = false;
         }
     }
-
     if ($go) {
         $logs[] = "Build has completed Successfully";
     }
 
     return create_log_from_array($logs);
-
-
 }
 
 function build_public()
