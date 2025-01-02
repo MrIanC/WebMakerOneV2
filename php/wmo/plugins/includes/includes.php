@@ -122,7 +122,7 @@ if (isset($_POST['delete'])) {
     } else {
         file_put_contents($filename, json_encode($includes, JSON_PRETTY_PRINT));
     }
-    
+
     $fullUri = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     header("Location: $fullUri");
 
@@ -142,10 +142,26 @@ if (isset($_POST['move'])) {
         }
 
     }
-    file_put_contents($filename, json_encode($includes, JSON_PRETTY_PRINT));
+
+    if (($useDB ?? "no") == "yes") {
+        db_put_contents($filename, json_encode($includes, JSON_PRETTY_PRINT), $conn);
+    } else {
+        file_put_contents($filename, json_encode($includes, JSON_PRETTY_PRINT));
+    }
+
     $fullUri = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     header("Location: $fullUri");
 }
+
+
+if (($useDB ?? "no") == "yes") {
+    db_put_contents($filename, json_encode($includes, JSON_PRETTY_PRINT), $conn);
+} else {
+    file_put_contents($filename, json_encode($includes, JSON_PRETTY_PRINT));
+}
+
+//dont save past this point
+
 
 $includes[] = [
     'includes_name' => 'Palette',
@@ -167,7 +183,6 @@ if (($useDB ?? "no") == "yes") {
 } else {
     $scripts = (file_exists($script_filename)) ? json_decode(file_get_contents($script_filename), true) : [];
 }
-
 
 foreach ($scripts as $key => $value) {
     $includes[] = [
