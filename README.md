@@ -1,84 +1,108 @@
 # WebMakerOne
 
-## Static HTML Creator
+WebMakerOne is a tool designed to simplify the creation of static HTML websites.
 
-WebMakerOne is a tool designed to simplify the creation and management of static HTML websites. It includes various features for managing updates, secrets, users, data, palettes, fonts, includes, and actions.
-
----
+## Requirements
+- PHP 8.3
+- Apache/Nginx
+- A MySQL database or equivalent
+- A domain and installation at the web-root (e.g., www.example.com or mypage.example.com)
 
 ## Features
 
-### After Installation
+### Actions
+Add custom JavaScript or jQuery scripts that run when an element is clicked.
+1. From the menu, select **Actions**.
+2. Fill in the name and script of the action.
+3. Click **Add** to save the action.
 
-#### Update
-- Update WebMakerOne to the latest version.
-- Navigate to the **Update** page from the menu.
-- Click the **Update** button to apply the latest updates.
-- A message log will display the status of the update.
+> **Note:** Actions are applied to the website in the content editor. Deleted actions are no longer applied.
 
-> **Note:** If the Update button is unavailable, the latest version is already installed, or update details from GitHub are not available.
+### Content
+Create and manage content for your website.
+1. From the menu, select **Content**.
+2. Create a new page by entering a name and clicking **Create New Page**.
+3. Manage your pages:
+   - Edit: Click the page name.
+   - Delete: Click the delete button.
+   - Set as landing page: Click the home button.
+4. Deleted pages are moved to **Deleted Pages**:
+   - Restore: Click the restore button.
+   - Permanently delete: Click the permanent delete button.
 
-#### Secrets
-- Manage API keys for services like Google Fonts and Gemini.
-- Navigate to the **Secrets** page from the menu.
-- Save your API keys by clicking the **Save** button.
+> **Note:** Content is edited using GrapesJS.
 
-> **Note:** Obtain your API keys from the respective service providers.
+### Data
+Manage the data for your website.
+1. From the menu, select **Data**.
+2. Save the site data by clicking the save button.
 
-#### Users
-- Manage software users.
-- Navigate to the **Users** page from the menu.
-- Add a new user by filling in the username and password, then clicking the **Add User** button.
-- Delete a user by clicking the **Delete** button next to their username.
+> **Note:** Data is used for SEO and social media links.
 
-> **Important:** 
-> - You cannot delete the user you are logged in as.
-> - Update passwords by creating a new user with the same username.
+### Footer
+Add a footer to your website.
+1. From the menu, select **Footer**.
+2. Edit the footer using the content editor.
 
-#### Data
-- Manage your website's data, including SEO and social media information.
-- Navigate to the **Data** page from the menu.
-- Save site data by clicking the **Save** button.
+### Includes
+Add scripts, stylesheets, or HTML to your website.
+1. From the menu, select **Includes**.
+2. Fill in the name, type, URL, and location of the include.
+3. Click **Include Link/Script** to add it.
 
-> **Note:** This data impacts your website's SEO and social media links.
+> **Note:** Includes are applied in the content editor and automatically include palette, fonts, and scripts.
 
-#### Palette
-- Customize your website's color palette.
-- Navigate to the **Palette** page from the menu.
-- Use the color picker to select a color, name it, and add it to the palette.
-- Manage colors using the **Delete** button.
+### Media
+Upload images, videos, or audio to your website.
+1. From the menu, select **Media**.
+2. Choose files and click **Upload**.
+
+> **Note:** Media is applied to the website in the content editor.
+
+### Navigation
+Add a navigation bar to your website.
+1. From the menu, select **Navigation**.
+2. Fill in the name and link of the navigation item.
+3. Click **Add** to save it.
+
+### Publish
+Publish your website, set it under construction, or export it as a ZIP file.
+1. From the menu, select **Publish**.
+
+> **Note:** Only the published site can be exported.
+
+### Scripts
+Add custom scripts (JavaScript or jQuery) to your website that run on page load.
+1. From the menu, select **Scripts**.
+2. Upload the script and click **Upload**.
+3. Enable or disable scripts using the respective buttons.
+
+### Secrets
+Store API keys for integrations such as Google Fonts and Gemini.
+1. From the menu, select **Secrets**.
+2. Save API keys by clicking the save button.
+
+> **Note:** Obtain API keys from the respective websites.
+
+### SEO
+Add meta tags for search engine optimization.
+1. From the menu, select **SEO**.
+2. Fill in the name and content of the meta tag.
+3. Click **Add** to save it.
+
+### Update
+Update WebMakerOne to the latest version.
+1. From the menu, select **Update**.
+2. Click **Update** to install the latest version.
+
+> **Note:** If the update button is unavailable, the latest version is already installed or update details are not available.
+
+### Users
+Manage users of the software.
+1. From the menu, select **Users**.
+2. Add users by entering a username and password, then clicking the add button.
+3. Delete users by clicking the delete button next to their username.
 
 > **Notes:** 
-> - Custom colors are applied via CSS in the content editor.
-> - Deleted colors will no longer be applied to the website.
-
-#### Fonts
-- Manage website fonts.
-- Navigate to the **Fonts** page from the menu.
-- Select fonts for headings, paragraphs, and navigation.
-- Fonts are applied to the website automatically.
-
-> **Warnings:**
-> - Fonts are sourced from Google Fonts. Add your API key in the **Secrets** tab.
-
-#### Includes
-- Add custom scripts, stylesheets, or HTML to your website.
-- Navigate to the **Includes** page from the menu.
-- Specify the name, type, URL, and location of the include, then click **Include Link/Script** to add it.
-
-> **Notes:**
-> - Includes are automatically added to the website via the content editor.
-> - Palette, fonts, and scripts are automatically included.
-
-#### Actions
-- Add custom JavaScript or jQuery actions triggered by specific elements.
-- Navigate to the **Actions** page from the menu.
-- Specify the name and script, then click **Add** to save the action.
-
-> **Note:** Actions are applied to the website via the content editor. Deleted actions will no longer be available.
-
----
-
-## Support
-
-For additional help or support, please refer to the documentation or contact the WebMakerOne team.
+> - You cannot delete the user you are logged in as.
+> - Update a password by adding a user with the same username.
