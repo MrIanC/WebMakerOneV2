@@ -103,6 +103,7 @@ if (($useDB ?? "no") == "yes") {
 
 if ($gitDate != $version['wmoV2']) {
     $msg[] = "New Version Available!";
+    
 }
 
 
