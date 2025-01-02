@@ -6,6 +6,18 @@ function isValidJSON($string)
     return (json_last_error() === JSON_ERROR_NONE);
 }
 
+
+$dir_settings = $settings->settings['out_dir'] . "/wmo/settings";
+$filename = "$dir_settings/users.json";
+
+if (($useDB ?? "no") == "yes") {
+    $users = (db_entry_exists($filename, $conn)) ? json_decode(db_get_contents($filename, $conn), true) : [];
+} else {
+    $users = (file_exists($filename)) ? json_decode(file_get_contents($filename), true) : [];
+}
+
+
+
 if (!empty($_POST) && isset($_POST['login'])) {
     $_POST['login'] ??= "na";
     if ($_POST['login'] === "out") {
@@ -36,15 +48,6 @@ if (!empty($_POST) && isset($_POST['username'], $_POST['password'], $_POST['logi
 
 
     $authenicationKeyPrep = $_POST['username'] . date("Ymdh");
-
-    $dir_settings = $settings->settings['out_dir'] . "/wmo/settings";
-    $filename = "$dir_settings/users.json";
-
-    if (($useDB ?? "no") == "yes") {
-        $users = (db_entry_exists($filename, $conn)) ? json_decode(db_get_contents($filename, $conn), true) : [];
-    } else {
-        $users = (file_exists($filename)) ? json_decode(file_get_contents($filename), true) : [];
-    }
 
     $authUser = $users[$_POST['username']] ?? null;
 
