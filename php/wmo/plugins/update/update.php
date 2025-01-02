@@ -10,13 +10,13 @@ $msg[] = "";
 
 $go = false;
 if (($_POST['update'] ?? "false" == "Github")) {
-    $msg = "Valid Update Request";
+    $msg[] = "Valid Update Request";
     $go = true;
 }
 
 
 if ($go) {
-    $msg = "Downloading Update Zip file from git";
+    $msg[] = "Downloading Update Zip file from git";
 
     $url = 'https://github.com/MrIanC/WebMakerOneV2/archive/refs/heads/master.zip';
     $zipFile = "$dir_root/install.zip";
@@ -36,7 +36,7 @@ if ($go) {
     if (curl_errno($ch)) {
         $msg[] = 'Error: ' . curl_error($ch);
     } else {
-        if (file_get_contents(__DIR__ . "/install.zip") == "Not Found") {
+        if (file_get_contents($zipFile) == "Not Found") {
             $msg[] = 'Invalid Zip File!';
             $go = false;
         } else {
@@ -127,6 +127,8 @@ if (isset($commits)) {
 } else {
     $gitDate = "Not Available";
 }
+
+create_log_from_array($msg ?? []);
 
 $html_body = str_replace(
     ['#version#', "#current_version#", "#logs#", "#dlavail#"],
