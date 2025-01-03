@@ -130,7 +130,7 @@ if ($_POST['setup'] ?? false == "true") {
                     $("#progress").css("width", "100%");
                 });
                 $("#continue").click(function() {
-                    window.location = "/app/?wmo=users";
+                    window.location = "/app/";
                 })
             });
         </script>

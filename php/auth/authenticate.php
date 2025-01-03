@@ -27,7 +27,7 @@ if (!empty($_POST) && isset($_POST['login'])) {
     }
 }
 
-if (!empty($_POST) && isset($_POST['username'], $_POST['password'], $_POST['login'])) {
+if (!empty($_POST) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['login'])) {
 
     if (empty($users)) {
         $dir_settings = $settings->settings['out_dir'] . "/wmo/settings";
@@ -48,7 +48,7 @@ if (!empty($_POST) && isset($_POST['username'], $_POST['password'], $_POST['logi
 
     $authUser = $users[$_POST['username']] ?? null;
 
-    if (isset($authUser['username'], $authUser['password'])) {
+    if (isset($authUser['username']) && isset($authUser['password'])) {
         if (password_verify($_POST['password'], $authUser['password'])) {
             $_SESSION['authtoken'] = base64_encode(json_encode([
                 "username" => $_POST['username'],
@@ -95,7 +95,6 @@ if (($_SESSION['authtoken'] ?? false) === false) {
     $loginpage->inject("head", '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />', "end");
 
     if (empty($users)) {
-        print_r($users);
         $loginpage->inject('body', file_get_contents(__DIR__ . "/new_user.html"));
     } else {
         $loginpage->inject('body', file_get_contents(__DIR__ . "/login_page.html"));
