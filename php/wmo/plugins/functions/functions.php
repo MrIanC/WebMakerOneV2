@@ -75,6 +75,102 @@ function create_log_from_array($array)
     }
     return implode($logs);
 }
+
+function check_completion()
+{
+    global $settings;
+    global $conn;
+
+    $startBytes = memory_get_usage();
+
+    $baseDir = $_SERVER['DOCUMENT_ROOT'];
+
+    $dir_settings = $settings->settings['out_dir'] . "/wmo/settings";
+    $dir_content = $settings->settings['out_dir'] . "/wmo/content";
+
+    $go = true;
+    $points = 0;
+    $total = 0;
+    if ($go) {// Load required Settings to Variables
+        //settings
+        $filename['action'] = "$dir_settings/actions.json";
+        $filename['apis'] = "$dir_settings/apikeys.json";
+        $filename['data'] = "$dir_settings/data.json";
+        $filename['favicon'] = "$dir_settings/favicon.json";
+        $filename['font'] = "$dir_settings/font.json";
+        $filename['includes'] = "$dir_settings/includes.json";
+        $filename['jsonld'] = "$dir_settings/includes.json";
+        $filename['jsonld'] = "$dir_settings/includes.json";
+        $filename['landing'] = "$dir_settings/landing.json";
+        $filename['navigation'] = "$dir_settings/navigation.json";
+        $filename['palette'] = "$dir_settings/navigation.json";
+        $filename['scripts'] = "$dir_settings/navigation.json";
+        $filename['seo'] = "$dir_settings/seo.json";
+        $filename['users'] = "$dir_settings/users.json";
+
+        //settings
+        foreach ($filename as $key => $folder) {
+            $data[$key] = (db_entry_exists($folder, $conn)) ? json_decode(db_get_contents($folder, $conn), true) : [];
+        }
+
+        foreach ($data as $key => $value) {
+            if (empty($value)) {
+                $total++;
+            } else {
+                $points++;
+                $total++;
+            }
+
+        }
+    }
+
+    $percentage = round($points / $total * 100,0);
+
+    // Calculate the stroke-dashoffset for the progress arc
+    $radius = 45; // Radius of the circle
+    $circumference = 2 * M_PI * $radius; // Circumference of the circle
+    $offset = $circumference * (1 - ($percentage / 100)); // Calculate offset
+    
+    // Output the SVG with dynamic values
+    return <<<HTML
+<div style="position: relative; width: 64px; height: 64px;">
+    <svg width="64" height="64" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="transform: rotate(-90deg);">
+        <!-- Background circle -->
+        <circle
+            cx="50"
+            cy="50"
+            r="45"
+            fill="none"
+            stroke="#e6e6e6"
+            stroke-width="10"
+        />
+        <!-- Progress circle -->
+        <circle
+            cx="50"
+            cy="50"
+            r="45"
+            fill="none"
+            stroke="#0000ff"
+            stroke-width="10"
+            stroke-dasharray="$circumference"
+            stroke-dashoffset="$offset"
+        />
+    </svg>
+    <!-- Overlay text -->
+    <div style="
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);" class="fs-5">
+        $percentage
+    </div>
+</div>
+HTML;
+
+
+    return $percentage;
+
+}
 function build_public_from_db()
 {
 
@@ -590,7 +686,6 @@ function build_public_from_db()
 
     return create_log_from_array($logs);
 }
-
 function build_public()
 {
 

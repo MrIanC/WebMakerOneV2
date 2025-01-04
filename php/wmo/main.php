@@ -38,7 +38,7 @@ if (isset($_GET['wmo'])) {
     foreach (glob(__DIR__ . "/plugins/*/help.html") as $file) {
         $help_sections .= file_get_contents($file);
     }
-    
+
     $html_body = str_replace(
         ["#help#"],
         [$help_sections],
@@ -46,5 +46,12 @@ if (isset($_GET['wmo'])) {
     );
 }
 
-$all = str_replace(["#menu#", "#content#"], [$wmo_menu_html, $html_body], file_get_contents(__DIR__ . "/layout.html"));
+$percentComplete = check_completion();
+
+
+$all = str_replace(
+    ["#menu#", "#content#", "#percentComplete#"],
+    [$wmo_menu_html, $html_body, $percentComplete],
+    file_get_contents(__DIR__ . "/layout.html")
+);
 $htmlDOC->inject("body", $all, "start");
