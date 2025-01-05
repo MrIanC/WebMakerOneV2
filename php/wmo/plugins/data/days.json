@@ -1,0 +1,44 @@
+[
+    {
+        "monday": [
+            "8am",
+            "9am"
+        ]
+    },
+    {
+        "tuesday": [
+            "8am",
+            "9am"
+        ]
+    },
+    {
+        "wednesday": [
+            "8am",
+            "9am"
+        ]
+    },
+    {
+        "thursday": [
+            "8am",
+            "9am"
+        ]
+    },
+    {
+        "friday": [
+            "8am",
+            "9am"
+        ]
+    },
+    {
+        "saturday": [
+            "8am",
+            "9am"
+        ]
+    },
+    {
+        "sunday": [
+            "8am",
+            "9am"
+        ]
+    }
+]

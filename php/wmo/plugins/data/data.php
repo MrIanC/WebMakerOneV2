@@ -13,15 +13,20 @@ if (($useDB ?? "no") == "yes") {
 }
 
 $inputArray = ['name', 'description', 'imageurl', 'logo', 'telephone', 'email', 'url', 'streetAddress', 'city', 'province', 'postalCode', 'country', 'openingHours', 'socialMedia', "priceRange"];
-$inputArrayDetail = [
-    "Site Profile" => ['name', 'description', 'url'],
-    "Site Media" => ['imageurl', 'logo'],
-    "Contact Details" => ['telephone', 'email', 'streetAddress', 'city', 'province', 'postalCode', 'country'],
-    "Work Hours" =>
-        'openingHours',
-    'socialMedia',
-    "priceRange"
-];
+
+if (empty($data['openingHours'])) {
+    $data['openingHours'] = [
+        [
+            "monday" => ["8am", "9am"],
+            "tuesday" => ["8am", "9am"],
+            "wednesday" => ["8am", "9am"],
+            "thursday" => ["8am", "9am"],
+            "friday" => ["8am", "9am"],
+            "saturday" => ["8am", "9am"],
+            "sunday" => ["8am", "9am"],
+        ]
+    ];
+}
 
 foreach ($inputArray as $input) {
     $temp = isset($data[$input]) ? (is_array($data[$input]) ? json_encode($data[$input], JSON_PRETTY_PRINT & JSON_UNESCAPED_SLASHES) : $data[$input]) : "";
@@ -40,9 +45,15 @@ foreach ($_POST as $key => $value) {
             $_POST[$key] = json_decode($value, true);
         }
     } else {
-        if (strlen($value) > 40) {$rows = 3;}
-        if (strlen($value) > 120) {$rows = 6;}
-        if (strlen($value) > 600) {$rows = 12;}
+        if (strlen($value) > 40) {
+            $rows = 3;
+        }
+        if (strlen($value) > 120) {
+            $rows = 6;
+        }
+        if (strlen($value) > 600) {
+            $rows = 12;
+        }
     }
     $inputs[] = '
         <div class="mb-3">
@@ -53,6 +64,7 @@ foreach ($_POST as $key => $value) {
 ';
 
 }
+
 $data = $_POST;
 //Seperated from SEO Moved to data
 $JSONLD = [
@@ -74,8 +86,10 @@ $JSONLD = [
             "postalCode" => $data['postalCode'],
             "addressCountry" => $data['country']
         ],
-        "openingHours" => isset($data['openingHours']) ? (function ( $data) {
-            if (!is_array($data)) return null;
+        "openingHours" => isset($data['openingHours']) ? (function ($data) {
+            $dayOfWeek = [];
+            if (!is_array($data))
+                return null;
             foreach ($data as $day => $hours) {
                 $dayOfWeek[] = [
                     "@type" => "OpeningHoursSpecification",
@@ -85,15 +99,15 @@ $JSONLD = [
                 ];
             }
             return $dayOfWeek;
-        })($data['openingHours']) : [],
+        })($data['openingHours'][0]??[]) : [],
         "sameAs" => $data['socialMedia'] ?? [],
         "priceRange" => $data['priceRange'] ?? "R0 - R0",
     ]
 ];
 
 if (($useDB ?? "no") == "yes") {
-    db_put_contents($filename, json_encode($data, JSON_PRETTY_PRINT), $conn);
-    db_put_contents($jsonld_data_filename, json_encode($JSONLD, JSON_PRETTY_PRINT), $conn);
+    db_put_contents($filename, json_encode($data, JSON_PRETTY_PRINT & JSON_UNESCAPED_SLASHES), $conn);
+    db_put_contents($jsonld_data_filename, json_encode($JSONLD, JSON_PRETTY_PRINT & JSON_UNESCAPED_SLASHES), $conn);
 } else {
     file_put_contents($filename, json_encode($data, JSON_PRETTY_PRINT));
     file_put_contents($jsonld_data_filename, json_encode($JSONLD, JSON_PRETTY_PRINT));

@@ -11,13 +11,13 @@ class HTML_Structure
     function inject($element, $html = "", $place = "end") {
         libxml_use_internal_errors(true);
 
-        $tmp = new DOMDocument('1.0', 'UTF-8');
-
         // Attempt to load the HTML fragment
+        $tmp = new DOMDocument('1.0', 'UTF-8');
         if (!$tmp->loadXML($html)) {
             $errors = libxml_get_errors();
             print_r($errors);
             echo "Invalid XML: Unable to load the provided fragment.";
+            print_r($html);
             return;
         }
     
