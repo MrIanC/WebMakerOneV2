@@ -17,11 +17,6 @@ class Settings
         $this->settings['web_js_dir'] = $_SERVER['DOCUMENT_ROOT'] . "/js";
 
         $this->available_plugins();
-
-        if (!is_dir($this->settings['out_dir'] . "/settings")) {
-            mkdir($this->settings['out_dir'] . "/settings",0777);
-        }
-
     }
     private function available_plugins()
     {

@@ -1,7 +1,9 @@
 <?php
 
 $error = "";
-if (isset($_POST['update'])) {
+
+if ($_POST['update'] ?? "nodata" == "database") {
+   echo "update database?";
    $servername = $_POST['servername'] ?? '';
    $username = $_POST['username'] ?? '';
    $password = $_POST['password'] ?? '';
@@ -16,16 +18,14 @@ if (isset($_POST['update'])) {
    try {
       $conn = @new mysqli($servername, $username, $password, $dbname);
       file_put_contents(__DIR__ . "/setup.php", implode("\n", $db_secrets));
+      $fullUri = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+      header("Location: $fullUri");
    } catch (Exception $e) {
       error_log("Database connection failed: " . $e->getMessage());
       $error = "<div>Database connection failed: " . $e->getMessage() . "</div>";
    }
 }
 
-$servername = "localhost";
-$username = "your_username";
-$password = "your_password";
-$dbname = "your_database";
 if (file_exists(__DIR__ . "/setup.php"))
    include __DIR__ . "/setup.php";
 

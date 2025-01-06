@@ -1,0 +1,44 @@
+<div class="container">
+    <h1 class="mt-3">Database</h1>
+    <div class="mb-3 text-end border-bottom small text-secondary">Edit Database Details</div>
+    <div class="row">
+        <div class="col-12 col-md-4 col-lg-3">
+            <div class="alert alert-warning">
+                <span>Changing the database may cause:</span>
+                <ul>
+                    <li>Access loss</li>
+                    <li>Data Loss</li>
+                    <li>Other issues</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col">
+            <div class="py-3">
+                <h1>Current</h1>
+                <form method="post">
+                    <div>
+                        <label for="database">Database Name</label>
+                        <input type="text" name="database" class="form-control mb-3" value="#database_name#" />
+                    </div>
+                    <div>
+                        <label for="username">Username</label>
+                        <input type="text" name="username" class="form-control mb-3" value="#database_username#" />
+                    </div>
+                    <div>
+                        <label for="password">Password</label>
+                        <input type="text" name="password" class="form-control mb-3" value="#database_password#" />
+                    </div>
+                    <div>
+                        <label for="servername">Server Name</label>
+                        <input type="text" name="servername"  class="form-control mb-3" value="#database_server#" />
+                    </div>
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-primary" name="update" value="database"><i class="bi bi-floppy"></i></button>
+                    </div>
+                </form>
+                <div>Database Entry Count: <span class="fw-bold">#count_files#</span></div>
+            </div>
+        </div>
+
+    </div>
+</div>

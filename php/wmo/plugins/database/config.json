@@ -1,0 +1,11 @@
+
+{
+    "menu": {
+        "url": "?wmo=database",
+        "bi-icon": "bi-database",
+        "bi-text": "",
+        "link-text": "Database",
+        "show":"yes"
+    },
+    "page": "database"
+}

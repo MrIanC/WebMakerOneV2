@@ -1,6 +1,7 @@
 {
     "update":"order",
     "secrets":"order",
+    "database":"order",
     "users":"order",
     "data":"order",
     "menu": "order",
