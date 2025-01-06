@@ -42,7 +42,7 @@ if ($go) { //Get all files in the directory
 
 if ($go) { //Create the zip file
     $tmp = "";
-    $zipFileName = str_replace([".", " ", "-"], "_", subject: $data['name']) . date("Ymd.his") . ".zip";
+    $zipFileName = $_SERVER['DOCUMENT_ROOT'] . "/" . str_replace([".", " ", "-"], "_", subject: $data['name']) . date("Ymd.his") . ".zip";
 
     $zip = new ZipArchive();
     if ($zip->open($zipFileName, ZipArchive::CREATE | ZipArchive::OVERWRITE) === TRUE) {
@@ -57,7 +57,7 @@ if ($go) { //Create the zip file
 
         $zip->close();
         $logs[] = "[" . rtrim($tmp, ", ") . "] - " . count($files) . " added to ZIP file. \n";
-        $logs[] = '<a href="' . $zipFileName . '">Download ZIP</a>';
+        $logs[] = '<a href="/' . basename($zipFileName) . '">Download ZIP</a>';
 
         $filesize = filesize($zipFileName);
         $filesize_named = "bytes";

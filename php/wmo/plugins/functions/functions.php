@@ -107,10 +107,14 @@ function check_completion()
         $filename['scripts'] = "$dir_settings/navigation.json";
         $filename['seo'] = "$dir_settings/seo.json";
         $filename['users'] = "$dir_settings/users.json";
+        
+        //files
+        $filename['robots'] = "$dir_content/robots.txt";
+        $filename['sitemap'] = "$dir_content/sitemap.xml";
 
         //settings
         foreach ($filename as $key => $folder) {
-            $data[$key] = (db_entry_exists($folder, $conn)) ? json_decode(db_get_contents($folder, $conn), true) : [];
+            $data[$key] = (db_entry_exists($folder, $conn)) ?"Exists":"";
         }
 
         foreach ($data as $key => $value) {
@@ -124,13 +128,13 @@ function check_completion()
         }
     }
 
-    $percentage = round($points / $total * 100,0);
+    $percentage = round($points / $total * 100, 0);
 
     // Calculate the stroke-dashoffset for the progress arc
     $radius = 45; // Radius of the circle
     $circumference = 2 * M_PI * $radius; // Circumference of the circle
     $offset = $circumference * (1 - ($percentage / 100)); // Calculate offset
-    
+
     // Output the SVG with dynamic values
     return <<<HTML
 <div style="position: relative; width: 64px; height: 64px;">
@@ -237,6 +241,8 @@ function build_public_from_db()
         //files
         $fonts_filename = "$dir_content/css/fonts.css";
         $palette_filename = "$dir_content/css/palette.css";
+        $robots_filename = "$dir_content/robots.txt";
+        $sitemap_filename = "$dir_content/sitemap.xml";
         $header_html_filename = "$dir_content/header/header.html";
         $footer_html_filename = "$dir_content/footer/footer.html";
         $jsonld_data_filename = "$dir_settings/jsonld.json";
@@ -254,6 +260,8 @@ function build_public_from_db()
         //files
         $fonts_file = (db_entry_exists($fonts_filename, $conn)) ? db_get_contents($fonts_filename, $conn) : "";
         $palette_file = (db_entry_exists($palette_filename, $conn)) ? db_get_contents($palette_filename, $conn) : "";
+        $robots_file = (db_entry_exists($robots_filename, $conn)) ? db_get_contents($robots_filename, $conn) : "";
+        $sitemap_file = (db_entry_exists($sitemap_filename, $conn)) ? db_get_contents($sitemap_filename, $conn) : "";
         $header_file = (db_entry_exists($header_html_filename, $conn)) ? db_get_contents($header_html_filename, $conn) : "";
         $footer_file = (db_entry_exists($footer_html_filename, $conn)) ? db_get_contents($footer_html_filename, $conn) : "";
 
@@ -340,6 +348,20 @@ function build_public_from_db()
             } else {
                 $tmp .= "palette.css, ";
             }
+            if (empty($robots_file)) {
+                $go = false;
+                $logs[] = "No robots.txt. Fatal Error.";
+            } else {
+                $tmp .= "robots.txt, ";
+            }
+            if (empty($sitemap_file)) {
+                $go = false;
+                $logs[] = "No sitemap.xml. Fatal Error.";
+            } else {
+                $tmp .= "sitemap.xml, ";
+            }
+
+
             if (empty($header)) {
                 $go = false;
                 $logs[] = "No header. Fatal Error.";
@@ -423,7 +445,7 @@ function build_public_from_db()
         $logs[] = "";
         $go = $pages_found;
     }
-    if ($go) { //create font.css and palette.css. store html link in $stylelinks
+    if ($go) { //create font.css and palette.css. store html link in $stylelinks, Create Robots and sitemap from database entries
         $logs[] = "<b>Create Custom CSS Files</b>";
         $tmp = "[";
         if (file_put_contents("$baseDir/css/fonts.css", $fonts_file)) {
@@ -439,6 +461,21 @@ function build_public_from_db()
             $logs[] = "Palette Failed. Fatal Error";
             $go = false;
         }
+
+        if (file_put_contents("$baseDir/robots.txt", $robots_file)) {
+            $tmp .= "robots.txt, ";
+        } else {
+            $logs[] = "Robots Failed. Fatal Error";
+            $go = false;
+        }
+
+        if (file_put_contents("$baseDir/sitemap.xml", $sitemap_file)) {
+            $tmp .= "sitemap.xml, ";
+        } else {
+            $logs[] = "Sitemap Failed. Fatal Error";
+            $go = false;
+        }
+
         $stylelinks['fonts'] = '<link rel="stylesheet" href="/css/fonts.css">';
         $stylelinks['palette'] = '<link rel="stylesheet" href="/css/palette.css">';
 

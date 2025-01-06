@@ -3,18 +3,45 @@
     <div class="mb-3 text-end border-bottom small text-secondary">Edit Database Details</div>
     <div class="row">
         <div class="col-12 col-md-4 col-lg-3">
-            <div class="alert alert-warning">
-                <span>Changing the database may cause:</span>
-                <ul>
-                    <li>Access loss</li>
-                    <li>Data Loss</li>
-                    <li>Other issues</li>
-                </ul>
+            <div>
+                <h2>Operations</h2>
+                <form method="post">
+                    <div class="border shadow p-2 m-1 rounded">
+
+                        <div class="text-secondary small alert alert-success my-2">Export will create a zipfile with all
+                            your media and database entries for import in another installation of WebMakerOne</div>
+                        <button class="btn btn-primary" name="export" value="yes">Export</button>
+                    </div>
+                </form>
+                <form method="post">
+                    <div class="border shadow p-2 m-1 mt-3 rounded">
+
+                        <div class="text-secondary small alert alert-success my-2">Import files from another
+                            installation of WebMakerOne
+                        </div>
+                        <div class="alert alert-danger small my-2"><b>Import!</b> will Erase all data in the database
+                            and delete all media files</div>
+                        <button class="btn btn-primary" name="export" value="yes" disabled="true">Import</button>
+                        <div class="m-1 mt-3 p-2 border rounded small text-secondary bg-dark-subtle">
+                            Import is currently not available
+                        </div>
+
+                    </div>
+                </form>
+
             </div>
         </div>
         <div class="col">
             <div class="py-3">
-                <h1>Current</h1>
+                <div class="alert alert-warning">
+                    <span>Changing the database may cause:</span>
+                    <ul>
+                        <li>Access loss</li>
+                        <li>Data Loss</li>
+                        <li>Other issues</li>
+                    </ul>
+                </div>
+
                 <form method="post">
                     <div>
                         <label for="database">Database Name</label>
@@ -30,10 +57,11 @@
                     </div>
                     <div>
                         <label for="servername">Server Name</label>
-                        <input type="text" name="servername"  class="form-control mb-3" value="#database_server#" />
+                        <input type="text" name="servername" class="form-control mb-3" value="#database_server#" />
                     </div>
                     <div class="text-end">
-                        <button type="submit" class="btn btn-primary" name="update" value="database"><i class="bi bi-floppy"></i></button>
+                        <button type="submit" class="btn btn-primary" name="update" value="database"><i
+                                class="bi bi-floppy"></i></button>
                     </div>
                 </form>
                 <div>Database Entry Count: <span class="fw-bold">#count_files#</span></div>
