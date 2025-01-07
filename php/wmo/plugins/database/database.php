@@ -74,7 +74,7 @@ if ($_POST['import'] ?? "no" == "yes") {
 
                     if (str_contains($fileInfo['name'], "uploads/")) {
                         $fileContents = $zip->getFromName($fileInfo['name']);
-                        file_put_contents("{$_SERVER['DOCUMENT_ROOT']}/uploads/{$fileInfo['name']}", $fileContents);
+                        file_put_contents("{$_SERVER['DOCUMENT_ROOT']}/{$fileInfo['name']}", $fileContents);
                     }
 
                     if (str_contains($fileInfo['name'], "wmo/")) {
