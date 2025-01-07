@@ -62,7 +62,7 @@ if ($_POST['import'] ?? "no" == "yes") {
 
         if ($go) {
             $zip = new ZipArchive;
-            $dirName= $_SERVER['DOCUMENT_ROOT'];
+            $dirName= dirname($_SERVER['DOCUMENT_ROOT']);
             if ($zip->open($filePath) === TRUE) {
 
                 if (!is_dir("{$_SERVER['DOCUMENT_ROOT']}/uploads")) {
@@ -79,6 +79,7 @@ if ($_POST['import'] ?? "no" == "yes") {
 
                     if (str_contains($fileInfo['name'], "wmo/")) {
                         $fileContents = $zip->getFromName($fileInfo['name']);
+                        //echo "$dirName/{$fileInfo['name']}" . "</br>";
                         db_put_contents("$dirName/{$fileInfo['name']}", $fileContents, $conn);
                     }
                 }
