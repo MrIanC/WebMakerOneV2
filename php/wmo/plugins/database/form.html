@@ -13,7 +13,8 @@
                         <button class="btn btn-primary" name="export" value="yes">Export</button>
                     </div>
                 </form>
-                <form method="post">
+                <form method="post" enctype="multipart/form-data">
+
                     <div class="border shadow p-2 m-1 mt-3 rounded">
 
                         <div class="text-secondary small alert alert-success my-2">Import files from another
@@ -21,11 +22,8 @@
                         </div>
                         <div class="alert alert-danger small my-2"><b>Import!</b> will Erase all data in the database
                             and delete all media files</div>
-                        <button class="btn btn-primary" name="export" value="yes" disabled="true">Import</button>
-                        <div class="m-1 mt-3 p-2 border rounded small text-secondary bg-dark-subtle">
-                            Import is currently not available
-                        </div>
-
+                        <input class="form-control mb-3" type="file" name="uploadedFile" id="file" multiple="" />
+                        <button class="btn btn-primary" name="import" value="yes">Import</button>
                     </div>
                 </form>
 

@@ -2,7 +2,7 @@
 
 if ($_POST['export'] ?? "no" == "yes") {
     $zip = new ZipArchive();
-    $zipFileName = "{$_SERVER['DOCUMENT_ROOT']}/example.zip";
+    $zipFileName = "{$_SERVER['DOCUMENT_ROOT']}/export.zip";
     if ($zip->open($zipFileName, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== TRUE) {
         exit("Cannot open <$zipFileName>\n");
     }
@@ -34,9 +34,63 @@ if ($_POST['export'] ?? "no" == "yes") {
 
     }
     $zip->close();
+
+    $fullUri = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . "/export.zip";
+    header("Location: $fullUri");
 }
 
+$file_upload_msg = [];
+if ($_POST['import'] ?? "no" == "yes") {
+    echo "Import Clicked";
+    $go = false;
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        echo "method is post";
+        if (!empty($_FILES['uploadedFile']['name'])) {
+            $uploadDir = $_SERVER['DOCUMENT_ROOT'];
+            $fileName = $_FILES['uploadedFile']['name'];
+            $tmpName = $_FILES['uploadedFile']['tmp_name'];
+            $filePath = $uploadDir . "/" . basename($fileName);
 
+            if (move_uploaded_file($tmpName, $filePath)) {
+                $file_upload_msg[] = "<p style='color:green;'>File '$fileName' uploaded successfully!</p>";
+                $go = true;
+            } else {
+                $file_upload_msg[] = "<p style='color:red;'>Failed to upload file '$fileName'.</p>";
+                $go = false;
+            }
+        }
+
+        if ($go) {
+            $zip = new ZipArchive;
+
+            if ($zip->open($filePath) === TRUE) {
+
+                if (!is_dir("{$_SERVER['DOCUMENT_ROOT']}/uploads")) {
+                    mkdir("{$_SERVER['DOCUMENT_ROOT']}/uploads", 0777, true);
+                }
+
+                for ($i = 0; $i < $zip->numFiles; $i++) {
+                    $fileInfo = $zip->statIndex($i);
+
+                    if (str_contains($fileInfo['name'], "uploads/")) {
+                        $fileContents = $zip->getFromName($fileInfo['name']);
+                        file_put_contents("{$_SERVER['DOCUMENT_ROOT']}/uploads/{$fileInfo['name']}", $fileContents);
+                    }
+
+                    if (str_contains($fileInfo['name'], "wmo/")) {
+                        $fileContents = $zip->getFromName($fileInfo['name']);
+                        db_put_contents("{$_SERVER['DOCUMENT_ROOT']}/{$fileInfo['name']}", $fileContents, $conn);
+                    }
+                }
+                $zip->close();
+            } else {
+                $go = false;
+                $msg[] = 'Invalid Zip File!';
+            }
+        }
+
+    }
+}
 
 $count_files = count(db_glob("*", $conn));
 $html_body = str_replace(
@@ -45,14 +99,16 @@ $html_body = str_replace(
         '#database_username#',
         '#database_password#',
         '#database_server#',
-        "#count_files#"
+        "#count_files#",
+        "#file_upload_msg#"
     ],
     [
         $dbname,
         $username,
         $password,
         $servername,
-        $count_files
+        $count_files,
+        implode($file_upload_msg)
     ],
     file_get_contents(__DIR__ . "/form.html")
 );
