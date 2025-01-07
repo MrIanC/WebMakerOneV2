@@ -1,4 +1,10 @@
 {
+    "1": {
+        "includes_name": "bootstrap.css",
+        "includes_url": "https:\/\/cdnjs.cloudflare.com\/ajax\/libs\/bootstrap\/5.3.3\/css\/bootstrap.min.css",
+        "includes_location": "Head - Start",
+        "includes_type": "Stylesheet"
+    },
     "2": {
         "includes_name": "UTF-8",
         "includes_url": "    <meta charset=\"UTF-8\" \/>\r\n",
@@ -12,18 +18,12 @@
         "includes_type": "HTML"
     },
     "4": {
-        "includes_name": "bootstrap.css",
-        "includes_url": "https:\/\/cdnjs.cloudflare.com\/ajax\/libs\/bootstrap\/5.3.3\/css\/bootstrap.min.css",
-        "includes_location": "Head - End",
-        "includes_type": "Stylesheet"
-    },
-    "5": {
         "includes_name": "BootstrapIcons",
         "includes_url": "<link rel=\"stylesheet\" href=\"https:\/\/cdn.jsdelivr.net\/npm\/bootstrap-icons@1.11.3\/font\/bootstrap-icons.min.css\" \/>",
         "includes_location": "Head - End",
         "includes_type": "HTML"
     },
-    "6": {
+    "5": {
         "includes_name": "bootstrap.js",
         "includes_url": "https:\/\/cdnjs.cloudflare.com\/ajax\/libs\/bootstrap\/5.3.3\/js\/bootstrap.min.js",
         "includes_location": "Body - End",

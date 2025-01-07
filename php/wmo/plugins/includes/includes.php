@@ -142,6 +142,7 @@ if (isset($_POST['move'])) {
         }
 
     }
+    $includes = array_values($includes);
 
     if (($useDB ?? "no") == "yes") {
         db_put_contents($filename, json_encode($includes, JSON_PRETTY_PRINT), $conn);

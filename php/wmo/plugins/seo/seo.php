@@ -60,8 +60,9 @@ foreach ($seo as $key => $value) {
 }
 
 //file_put_contents($seofilename, json_encode($seo, JSON_PRETTY_PRINT));
-
+$problems = [];
 if (isset($current)) {
+
     if (isset($_POST['title'])) {
         $seo[$current] = $_POST;
         if (($useDB ?? "no") == "yes") {
@@ -106,6 +107,35 @@ if (isset($current)) {
         return ($headings == "") ? null : $headings;
     })($doc) ?? "NO HEADINGS TO MAKE DESCRIPTION";
 
+
+    foreach ([1, 2, 3, 4, 5, 6] as $headingLevel) {
+        foreach ($doc->getElementsByTagName("h$headingLevel") as $key => $value) {
+            $heading = str_replace(["\n", "\r", "  "], "", ($value->textContent ?? ""));
+            $headingList[] = $headingLevel;
+
+        }
+    }
+    
+    $headingErrors = count($doc->getElementsByTagName("h1")) > 1 ? 1 : 0;
+    $last = 0;
+    foreach ($headingList as $key => $val) {
+        if (($val - $last) > 1) {
+            $headingErrors++;
+        }
+        $last = $val;
+    }
+    if ($headingErrors > 0) {
+        $problems[] = "<details><summary>Heading Structure mis-matchs: $headingErrors 
+        </summary><div class=\"small text-secondary bg-white p-2 m-1 rounded border\"> 
+        Heading tags (&lt;h1&gt; to &lt;h6&gt;) structure a webpage hierarchically, improving readability, accessibility, and SEO. Use a single &lt;h1&gt; for the main title to define the page's focus, followed by &lt;h2&gt; for major sections, &lt;h3&gt; for subsections, and &lt;h4&gt; to &lt;h6&gt; for further subdivisions as needed. Maintain a logical order, avoiding skipped levels (e.g., jumping from &lt;h1&gt; to &lt;h3&gt;), and use headings only to organize content, not for styling.
+        </div></details>";
+    }
+
+
+
+
+
+
     $seo[$current]['headings'] = $metaDescription ?? "";
     $seo[$current]['metaDescription'] ??= $metaDescription;
 
@@ -123,9 +153,48 @@ if (isset($current)) {
 
     $imageUrl = ($images->length > 0) ? $images->item(0)->getAttribute('src') : "NO IMAGE FOUND";
 
+    /**
+     * Problem Checking
+     */
+    $imagesWithoutAltTags = 0;
+    foreach ($images as $key => $image) {
+        $imagesWithoutAltTags = empty($image->getAttribute('alt')) ? $imagesWithoutAltTags + 1 : $imagesWithoutAltTags;
+    }
+    if ($imagesWithoutAltTags > 0) {
+
+
+        $problems[] = "<details><summary>Missing Alt tag attribute for images: $imagesWithoutAltTags 
+    </summary><div class=\"small text-secondary bg-white p-2 m-1 rounded border\">
+    Alt tags (alternative text) are essential for images, improving accessibility by providing 
+    descriptive text for visually impaired users, enhancing SEO by helping search engines 
+    understand image context, and serving as fallback content when images fail to load.
+     They are crucial for compliance with accessibility standards like WCAG. Best practices
+      include being descriptive and concise (e.g., \"A golden retriever playing in a field\"), avoiding redundant phrases like \"Image of,\" 
+      and using empty alt attributes (alt=&quot;&quot;) for decorative images. Proper use of alt tags ensures better usability, accessibility, 
+      and visibility for web content.
+    </div></details>";
+    }
+    $linkTextErrors = 0;
+    $links = $doc->getElementsByTagName("a");
+    foreach ($links as $key => $value) {
+        $linkContent = $value->textContent;
+        if (empty($linkContent)) {
+            $linkTextErrors++;
+        }
+    }
+    if ($linkTextErrors > 0) {
+        $problems[] = "<details><summary>Links should always have associated text: $linkTextErrors 
+    </summary><div class=\"small text-secondary bg-white p-2 m-1 rounded border\">
+    Links should always have associated text to ensure accessibility, usability, 
+    and clarity. Descriptive link text provides context for users and screen readers, helping 
+    them understand the purpose or destination of the link. Avoid using vague phrases like \"Click here\" or \"Read more\"; instead,
+     use specific and meaningful text such as \"View our pricing plans\" or \"Learn more about accessibility standards.\" 
+     Properly labeled links improve navigation for all users and are essential for meeting web accessibility guidelines.
+    </div></details>";
+    }
+
+
     $seo[$current]['ogImage'] ??= $imageUrl;
-
-
     $seo[$current]['faviconUrl'] = "/" . $faviconDetails['favicon'] ??= "NO FAVICON SET";
     $seo[$current]['priority'] ??= "0.8";
 
@@ -154,41 +223,6 @@ if (isset($current)) {
         echo "nobody";
     }
 
-    //Seperated from SEO Moved to Publish
-    /*$JSONLD = [
-        [
-            "@context" => "https://schema.org",
-            "@type" => "LocalBusiness",
-            "url" => $url,
-            "logo" => $data['logo'],
-            "image" => $data['imageurl'],
-            "name" => $data['name'],
-            "description" => $data['description'],
-            "email" => $data['email'],
-            "telephone" => $data['telephone'],
-            "address" => [
-                "@type" => "PostalAddress",
-                "streetAddress" => $data['streetAddress'],
-                "addressLocality" => $data['city'],
-                "addressRegion" => $data['province'],
-                "postalCode" => $data['postalCode'],
-                "addressCountry" => $data['country']
-            ],
-            "openingHours" => isset($data['openingHours']) ? (function ($data) {
-                foreach ($data as $day => $hours) {
-                    $dayOfWeek[] = [
-                        "@type" => "OpeningHoursSpecification",
-                        "dayOfWeek" => $day,
-                        "opens" => $hours[0] ?? "8am",
-                        "closes" => $hours[1] ?? "5pm"
-                    ];
-                }
-                return $dayOfWeek;
-            })($data['openingHours']) : [],
-            "sameAs" => $data['socialMedia'] ?? [],
-            "priceRange" => $data['priceRange'] ?? "R0 - R0",
-        ]
-    ];*/
     foreach ($AllHeadings as $key => $value) {
 
         $JSONLD[] = [
@@ -229,6 +263,29 @@ if (isset($current)) {
         $src[] = "#qna_$key#";
         $rep[] = $value;
     }
+    $src[] = "#problems#";
+    $rep[] = (function ($array) {
+        $html = [];
+        foreach ($array as $value) {
+            $html[] = '<div class="alert alert-warning">';
+            $html[] = $value;
+            $html[] = "</div>";
+        }
+        if (empty($html)) {
+            $html[] = '<div class="alert alert-success">';
+            $html[] = "<details><summary>No Issues Found 
+    </summary><div class=\"small text-secondary bg-white p-2 m-1 rounded border\">
+    We have reviewed the content for potential issues and did not find any; however, 
+    this does not guarantee that the content is entirely issue-free. We recommend using external
+     tools such as Google Lighthouse or similar auditing software to perform a comprehensive 
+     analysis and ensure optimal accessibility, performance, and compliance.
+
+    </div></details>";
+            $html[] = "</div>";
+        }
+        return implode($html);
+    })($problems);
+
 
     $page_seo = str_replace(
         $src,
