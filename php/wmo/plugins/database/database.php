@@ -41,10 +41,8 @@ if ($_POST['export'] ?? "no" == "yes") {
 
 $file_upload_msg = [];
 if ($_POST['import'] ?? "no" == "yes") {
-    echo "Import Clicked";
     $go = false;
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        echo "method is post";
         if (!empty($_FILES['uploadedFile']['name'])) {
             $uploadDir = $_SERVER['DOCUMENT_ROOT'];
             $fileName = $_FILES['uploadedFile']['name'];
@@ -62,7 +60,7 @@ if ($_POST['import'] ?? "no" == "yes") {
 
         if ($go) {
             $zip = new ZipArchive;
-            $dirName= dirname($_SERVER['DOCUMENT_ROOT']);
+            $dirName = dirname($_SERVER['DOCUMENT_ROOT']);
             if ($zip->open($filePath) === TRUE) {
 
                 if (!is_dir("{$_SERVER['DOCUMENT_ROOT']}/uploads")) {
@@ -88,7 +86,9 @@ if ($_POST['import'] ?? "no" == "yes") {
                 $go = false;
                 $msg[] = 'Invalid Zip File!';
             }
+
         }
+        unlink($filePath);
 
     }
 }
