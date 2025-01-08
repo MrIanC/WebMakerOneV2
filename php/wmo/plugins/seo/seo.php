@@ -207,7 +207,7 @@ if (isset($current)) {
             $imageavailable++;
         }
     }
-    
+
     foreach ($allimages as $imagesrc) {
         $headers = @get_headers($imagesrc, 1);
         if ($headers && strpos($headers[0], '200 OK') !== false) {
@@ -216,6 +216,9 @@ if (isset($current)) {
                 $imageavailable++;
                 $problemImages[] = "<div>" . $imagesrc . "</div>";
             }
+        } else {
+            $imageavailable++;
+            $problemImages[] = "<div>" . $imagesrc . "</div>";
         }
     }
 
@@ -232,6 +235,9 @@ if (isset($current)) {
 
     }
 
+    /**
+     * Check links
+     */
 
     $linkTextErrors = 0;
     $links = $doc->getElementsByTagName("a");
@@ -240,15 +246,20 @@ if (isset($current)) {
         if (empty($linkContent)) {
             $linkTextErrors++;
         }
+        if (empty($value->getAttribute("href"))) {
+            $linkTextErrors++;
+            $hrefEmpty[] = empty($linkContent) ? "<div>Link Content is empty</div>" : "<div> Empty href: $linkContent</div>";
+        }
     }
     if ($linkTextErrors > 0) {
-        $problems[] = "<details><summary>Links should always have associated text: $linkTextErrors 
+        $problems[] = "<details><summary>Links should always have associated text and have a valid href: $linkTextErrors 
     </summary><div class=\"small text-secondary bg-white p-2 m-1 rounded border\">
     Links should always have associated text to ensure accessibility, usability, 
     and clarity. Descriptive link text provides context for users and screen readers, helping 
     them understand the purpose or destination of the link. Avoid using vague phrases like \"Click here\" or \"Read more\"; instead,
      use specific and meaningful text such as \"View our pricing plans\" or \"Learn more about accessibility standards.\" 
      Properly labeled links improve navigation for all users and are essential for meeting web accessibility guidelines.
+     <div class=\"p-1\">".implode($hrefEmpty)." </div>
     </div></details>";
     }
 
