@@ -115,10 +115,10 @@ if (isset($current)) {
 
         }
     }
-    
+
     $headingErrors = count($doc->getElementsByTagName("h1")) > 1 ? 1 : 0;
     $last = 0;
-    foreach ($headingList as $key => $val) {
+    foreach ($headingList ?? [] as $key => $val) {
         if (($val - $last) > 1) {
             $headingErrors++;
         }
@@ -174,6 +174,65 @@ if (isset($current)) {
       and visibility for web content.
     </div></details>";
     }
+
+    /**
+     * Checking Image SRC and css url validity
+     */
+    $imageavailable = 0;
+    $problemImages = [];
+    $pattern = '/url\((["\']?)(.*?)\1\)/'; // Regular expression for url()
+    preg_match_all($pattern, $html_content, $matches);
+
+    if (!empty($matches[2])) {
+        $urls = $matches[2]; // Extract URLs
+    }
+
+    foreach ($urls ?? [] as $key => $imagesrc) {
+        if (!str_contains($imagesrc, "http")) {
+            $fullUri = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://") . $_SERVER['HTTP_HOST'];
+            $imagesrc = "$fullUri" . $imagesrc;
+        }
+        $allimages[] = $imagesrc;
+    }
+
+    foreach ($images as $key => $image) {
+        if (!empty($image->getAttribute('src'))) {
+            $imagesrc = $image->getAttribute('src');
+            if (!str_contains($imagesrc, "http")) {
+                $fullUri = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? "https://" : "http://") . $_SERVER['HTTP_HOST'];
+                $imagesrc = "$fullUri" . $imagesrc;
+            }
+            $allimages[] = $imagesrc;
+        } else {
+            $imageavailable++;
+        }
+    }
+    
+    foreach ($allimages as $imagesrc) {
+        $headers = @get_headers($imagesrc, 1);
+        if ($headers && strpos($headers[0], '200 OK') !== false) {
+            $contentType = $headers['Content-Type'] ?? '';
+            if (!in_array($contentType, ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/bmp', 'image/tiff'])) {
+                $imageavailable++;
+                $problemImages[] = "<div>" . $imagesrc . "</div>";
+            }
+        }
+    }
+
+
+    if ($imageavailable > 0) {
+        $problems[] = "
+        <details>
+        <summary>Missing Image Sources: $imageavailable
+        </summary>
+        <div class=\"small text-secondary bg-white p-2 m-1 rounded border\">
+        " . implode($problemImages) . "
+        </div>
+        </details>";
+
+    }
+
+
     $linkTextErrors = 0;
     $links = $doc->getElementsByTagName("a");
     foreach ($links as $key => $value) {
@@ -252,7 +311,7 @@ if (isset($current)) {
     }
 
     if (!isset($seo[$current]['schemaMarkup'])) {
-        $seo[$current]['schemaMarkup'] = json_encode($JSONLD, JSON_PRETTY_PRINT + JSON_UNESCAPED_SLASHES);
+        $seo[$current]['schemaMarkup'] = json_encode($JSONLD ?? [], JSON_PRETTY_PRINT + JSON_UNESCAPED_SLASHES);
     } else {
         //print_r(json_decode($seo[$current]['schemaMarkup'],true));
     }

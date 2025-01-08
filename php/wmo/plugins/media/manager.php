@@ -13,9 +13,6 @@ if (($useDB ?? "no") == "yes") {
 
 
 if (!isset($_GET['edit'])) {
-
-
-
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!empty($_FILES['uploadedFiles']['name'][0])) {
 
